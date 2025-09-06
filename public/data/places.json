@@ -1,0 +1,77 @@
+{
+  "categories": [
+    {
+      "id": "historical",
+      "title": "Исторические памятники",
+      "places": [
+        {
+          "id": "shopan-ata",
+          "name": "Мечеть Шопан-Ата",
+          "description": "Подземная мечеть X–XIII веков, уникальный памятник исламской архитектуры.",
+          "image": "images/historical/shopan-ata.jpg"
+        },
+        {
+          "id": "beket-ata",
+          "name": "Мечеть Бекет-Ата",
+          "description": "Святое место для паломников, высеченное в скале.",
+          "image": "images/historical/beket-ata.jpg"
+        },
+        {
+          "id": "shakpak-ata",
+          "name": "Некрополь Шакпак-Ата",
+          "description": "Подземная мечеть Шакпак-Ата XI–XIII веков, высеченная в меловых скалах и украшенная древними петроглифами.",
+          "image": "images/historical/shakpak-ata.jpg"
+        }
+        
+      ]
+    },
+    {
+      "id": "nature",
+      "title": "Природные объекты",
+      "places": [
+        {
+          "id": "bosjira",
+          "name": "Бозжыра",
+          "description": "Каньоны и скальные массивы, напоминающие марсианские пейзажи.",
+          "image": "images/nature/bosjira.jpg"
+        },
+        {
+          "id": "sherkala",
+          "name": "Шеркала",
+          "description": "Гора-символ Мангистау, по форме напоминает юрту или льва.",
+          "image": "images/nature/sherkala.jpg"
+        },
+        {
+          "id": "ustirt",
+          "name": "Устюртское плато",
+          "description": "Огромная каменная пустыня с обрывами и каньонами.",
+          "image": "images/nature/ustirt.jpg"
+        }
+      ]
+    },
+    {
+      "id": "villages",
+      "title": "Поселки",
+      "places": [
+        {
+          "id": "fort-shevchenko",
+          "name": "Форт-Шевченко",
+          "description": "Исторический город на побережье Каспия, основанный в XIX веке.",
+          "image": "images/villages/fort-shevchenko.jpg"
+        },
+        {
+          "id": "jana-ozen",
+          "name": "Жанаозен",
+          "description": "Современный промышленный город Мангистау, связанный с нефтяной отраслью Казахстана.",
+          "image": "images/villages/jana-ozen.jpg"
+        },
+        {
+          "id": "shetpe",
+          "name": "Шетпе",
+          "description": "Административный центр Мангистауского района, важный транспортный узел и ближайший населённый пункт к Устиртскому плато.",
+          "image": "images/villages/shetpe.jpg"
+        }
+      ]
+    }
+  ]
+}
