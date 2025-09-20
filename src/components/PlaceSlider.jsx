@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { usePlaces, getImageUrl } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
+import ImageLoader from "./ImageLoader";
 
 export default function PlaceSlider() {
   const { places, loading, error } = usePlaces(); // Получаем все места
@@ -87,27 +88,34 @@ export default function PlaceSlider() {
 
       <div className="slider" style={{ position: "relative" }}>
         {/* Основное изображение */}
-        <div className="slide" style={{ position: "relative" }}>
-          {currentPlace.image ? (
-            <img
+        <div className="slide" style={{ position: "relative", height: "300px" }}>
+          {(currentPlace.place_photos && currentPlace.place_photos.length > 0) ? (
+            <ImageLoader
+              src={currentPlace.place_photos[0].url}
+              alt={getLocalizedField(currentPlace, "name")}
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "12px",
+                filter: "sepia(0.25) contrast(1.05) saturate(0.95)",
+              }}
+            />
+          ) : currentPlace.image ? (
+            <ImageLoader
               src={getImageUrl(currentPlace.image)}
               alt={getLocalizedField(currentPlace, "name")}
               style={{
                 width: "100%",
-                height: "300px",
-                objectFit: "cover",
+                height: "100%",
                 borderRadius: "12px",
                 filter: "sepia(0.25) contrast(1.05) saturate(0.95)",
-              }}
-              onError={(e) => {
-                e.target.style.display = 'none';
               }}
             />
           ) : (
             <div
               style={{
                 width: "100%",
-                height: "500px",
+                height: "100%",
                 background: "var(--card)",
                 borderRadius: "12px",
                 border: "1px solid var(--border)",

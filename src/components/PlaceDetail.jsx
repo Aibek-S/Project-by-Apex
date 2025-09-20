@@ -2,11 +2,14 @@ import { useParams, Link } from "react-router-dom";
 import { usePlace, getImageUrl } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import FeedbackSection from "./FeedbackSection";
+import { useState } from "react";
+import ImageLoader from "./ImageLoader";
 
 export default function PlaceDetail() {
   const { id } = useParams();
   const { place, loading, error } = usePlace(id);
   const { t, getLocalizedField } = useLanguage();
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
 
   if (loading) {
     return (
@@ -68,6 +71,26 @@ export default function PlaceDetail() {
     );
   }
 
+  // Get all photos for the place (up to 3) from place_photos table
+  const allPhotos = [];
+  
+  // Add photos from place_photos table (up to 3 total)
+  if (place.place_photos && Array.isArray(place.place_photos)) {
+    place.place_photos.forEach(photo => {
+      if (allPhotos.length < 3) {
+        allPhotos.push(photo.url); // Use the full URL directly
+      }
+    });
+  }
+
+  // If we have no photos from place_photos, fall back to the main image
+  if (allPhotos.length === 0 && place.image) {
+    allPhotos.push(getImageUrl(place.image)); // Process the image filename
+  }
+
+  // If we have no photos at all, we'll show a placeholder
+  const hasPhotos = allPhotos.length > 0;
+
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
@@ -81,23 +104,78 @@ export default function PlaceDetail() {
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 24 }}>
-        {/* Simple Image Display */}
-        {place.image && (
+        {/* Photo Gallery */}
+        {hasPhotos ? (
           <div style={{ marginBottom: 16 }}>
-            <img
-              src={getImageUrl(place.image)}
-              alt={getLocalizedField(place, "name")}
-              style={{
-                width: '100%',
-                maxHeight: '400px',
-                objectFit: 'cover',
-                borderRadius: '12px',
-                filter: 'sepia(0.25) contrast(1.05) saturate(0.95)'
-              }}
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
+            {/* Main photo display */}
+            <div style={{ 
+              position: 'relative',
+              marginBottom: '12px',
+              height: '700px'
+            }}>
+              <ImageLoader
+                src={allPhotos[selectedPhotoIndex]} // Use the URL directly
+                alt={`${getLocalizedField(place, "name")} - Photo ${selectedPhotoIndex + 1}`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '12px',
+                  filter: 'sepia(0.25) contrast(1.05) saturate(0.95)'
+                }}
+              />
+            </div>
+            
+            {/* Thumbnail navigation (if more than one photo) */}
+            {allPhotos.length > 1 && (
+              <div style={{
+                display: 'flex',
+                gap: '8px',
+                justifyContent: 'center',
+                flexWrap: 'wrap'
+              }}>
+                {allPhotos.map((photo, index) => (
+                  <div 
+                    key={index}
+                    style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      border: selectedPhotoIndex === index ? '2px solid var(--primary)' : '1px solid var(--border)',
+                      filter: selectedPhotoIndex === index 
+                        ? 'sepia(0.25) contrast(1.05) saturate(0.95)' 
+                        : 'sepia(0.1) contrast(0.95) saturate(0.85) opacity(0.8)',
+                      flex: '0 0 auto'
+                    }}
+                    onClick={() => setSelectedPhotoIndex(index)}
+                  >
+                    <ImageLoader
+                      src={photo} // Use the URL directly
+                      alt={`${getLocalizedField(place, "name")} - Thumbnail ${index + 1}`}
+                      style={{
+                        width: '100%',
+                        height: '100%'
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div style={{ 
+            width: '100%',
+            height: '400px',
+            background: 'var(--card)',
+            borderRadius: '12px',
+            border: '1px solid var(--border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: '16px'
+          }}>
+            <p className="muted">{t("noImage") || "No image available"}</p>
           </div>
         )}
 
@@ -110,7 +188,7 @@ export default function PlaceDetail() {
             <p className="muted" style={{ marginBottom: 16 }}>
               {t("categories")}: {getLocalizedField(place.categories, "name")}
             </p>
-    )} 
+          )} 
 
           <div className="content">
             <p style={{ lineHeight: 1.6, fontSize: "1.1em" }}>

@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import L from 'leaflet';
 import { useMapPlaces, getImageUrl } from '../hooks/useSupabase';
 import { useLanguage } from '../contexts/LanguageContext';
+import ImageLoader from "../components/ImageLoader";
 
 // Импорт стилей Leaflet
 import 'leaflet/dist/leaflet.css';
@@ -64,27 +65,10 @@ export default function MapPage() {
   // Получаем ID места из параметров URL
   const placeId = searchParams.get('place');
   
-  // Проверка темы (тёмная по умолчанию)
-  const [isDarkTheme, setIsDarkTheme] = useState(!document.body.classList.contains('theme-light'));
-
-  // Отслеживаем изменения темы
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDarkTheme(!document.body.classList.contains('theme-light'));
-    });
-    
-    observer.observe(document.body, { 
-      attributes: true, 
-      attributeFilter: ['class'] 
-    });
-    
-    return () => observer.disconnect();
-  }, []);
-
-  // Границы региона Мангистау
+  // Границы региона Мангистау (расширены для лучшей видимости)
   const mangistauBounds = useMemo(() => [
-    [41.8, 50.0], // юго-западный угол
-    [46.8, 56.0]  // северо-восточный угол
+    [41.0, 49.0], // юго-западный угол (расширены границы)
+    [47.5, 57.0]  // северо-восточный угол (расширены границы)
   ], []);
 
   // Центр карты (примерно центр Мангистау)
@@ -116,7 +100,7 @@ export default function MapPage() {
         alignItems: 'center',
         height: '100vh',
         fontSize: '18px',
-        color: 'var(--text)'
+        color: '#2a1f1a'
       }}>
         {t('loading') || 'Загрузка карты...'}
       </div>
@@ -133,7 +117,7 @@ export default function MapPage() {
         height: '100vh',
         gap: '16px'
       }}>
-        <p style={{ color: 'var(--primary)', fontSize: '18px' }}>
+        <p style={{ color: '#c49a6c', fontSize: '18px' }}>
           {t('error')}: {error}
         </p>
         <Link to="/" className="btn">
@@ -152,32 +136,23 @@ export default function MapPage() {
     <div style={{ 
       height: '100vh', 
       width: '100%',
-      backgroundColor: isDarkTheme ? '#1a120b' : '#ffffff'
+      backgroundColor: '#1a1a1a' // Темный фон для лучшей контрастности со спутниковой картой
     }}>
       <MapContainer
         center={mapCenter}
-        zoom={8}
+        zoom={9} // Увеличенный начальный zoom для лучшей видимости
         style={{ height: '100%', width: '100%' }}
         maxBounds={mangistauBounds}
         maxBoundsViscosity={1.0}
-        minZoom={7}
-        maxZoom={18}
+        minZoom={6} // Уменьшен минимальный zoom для большей гибкости
+        maxZoom={17} // Увеличен максимальный zoom для более детального просмотра
         ref={mapRef}
       >
-        {/* Адаптивные тайлы в зависимости от темы */}
-        {isDarkTheme ? (
-          // Темная тема - картографический стиль
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          />
-        ) : (
-          // Светлая тема - стандартный OSM
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-        )}
+        {/* Используем только одну спутниковую карту - Esri World Imagery */}
+        <TileLayer
+          attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        />
 
         {/* Маркеры мест */}
         {places.map((place) => {
@@ -196,20 +171,20 @@ export default function MapPage() {
             >
               <Popup
                 maxWidth={300}
-                className={`custom-popup ${isDarkTheme ? 'dark-theme' : 'light-theme'}`}
+                className="custom-popup" // Убираем зависимость от темы
               >
                 <div style={{ 
                   padding: '8px',
                   fontFamily: 'inherit',
-                  backgroundColor: isDarkTheme ? 'var(--card)' : '#ffffff',
-                  color: isDarkTheme ? 'var(--text)' : '#2a1f1a'
+                  backgroundColor: '#ffffff', // Фиксированный цвет фона
+                  color: '#2a1f1a' // Фиксированный цвет текста
                 }}>
                   {/* Название места */}
                   <h3 style={{ 
                     margin: '0 0 12px 0',
                     fontSize: '16px',
                     fontWeight: 'bold',
-                    color: isDarkTheme ? 'var(--text)' : '#2a1f1a'
+                    color: '#2a1f1a' // Фиксированный цвет текста
                   }}>
                     {getPlaceName(place)}
                   </h3>
@@ -219,7 +194,7 @@ export default function MapPage() {
                     <p style={{ 
                       margin: '0 0 12px 0',
                       fontSize: '14px',
-                      color: isDarkTheme ? 'var(--muted)' : '#6b5a4c',
+                      color: '#6b5a4c', // Фиксированный цвет текста
                       fontStyle: 'italic'
                     }}>
                       {getLocalizedField(place.categories, 'name')}
@@ -227,21 +202,29 @@ export default function MapPage() {
                   )}
 
                   {/* Изображение */}
-                  {place.image && (
-                    <div style={{ marginBottom: '12px' }}>
-                      <img
-                        src={getImageUrl(place.image)}
+                  {(place.place_photos && place.place_photos.length > 0) ? (
+                    <div style={{ marginBottom: '12px', height: '150px' }}>
+                      <ImageLoader
+                        src={place.place_photos[0].url}
                         alt={getPlaceName(place)}
-                        loading="lazy"
                         style={{
                           width: '100%',
-                          maxHeight: '150px',
-                          objectFit: 'cover',
+                          height: '100%',
                           borderRadius: '8px',
-                          border: `1px solid ${isDarkTheme ? 'var(--border)' : '#d9cfc6'}`
+                          border: '1px solid #d9cfc6' // Фиксированный цвет границы
                         }}
-                        onError={(e) => {
-                          e.target.style.display = 'none';
+                      />
+                    </div>
+                  ) : place.image && (
+                    <div style={{ marginBottom: '12px', height: '150px' }}>
+                      <ImageLoader
+                        src={getImageUrl(place.image)}
+                        alt={getPlaceName(place)}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '8px',
+                          border: '1px solid #d9cfc6' // Фиксированный цвет границы
                         }}
                       />
                     </div>
@@ -254,8 +237,8 @@ export default function MapPage() {
                     style={{
                       display: 'inline-block',
                       padding: '8px 16px',
-                      backgroundColor: isDarkTheme ? 'var(--primary)' : '#c49a6c',
-                      color: '#1a120b',
+                      backgroundColor: '#c49a6c', // Фиксированный цвет фона
+                      color: '#1a120b', // Фиксированный цвет текста
                       textDecoration: 'none',
                       borderRadius: '6px',
                       fontSize: '14px',
@@ -278,14 +261,14 @@ export default function MapPage() {
         position: 'absolute',
         top: '80px',
         right: '10px',
-        background: isDarkTheme ? 'var(--card)' : '#ffffff',
-        border: `1px solid ${isDarkTheme ? 'var(--border)' : '#d9cfc6'}`,
+        background: 'rgba(0, 0, 0, 0.7)', // Полупрозрачный темный фон
+        border: '1px solid #ffffff',
         borderRadius: '6px',
         padding: '8px 12px',
         fontSize: '14px',
-        color: isDarkTheme ? 'var(--text)' : '#2a1f1a',
+        color: '#ffffff', // Белый текст для лучшей видимости на спутниковой карте
         zIndex: 1000,
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        boxShadow: '0 2px 4px rgba(0,0,0,0.5)'
       }}>
         {t('placesOnMap') || 'Мест на карте'}: {places.length}
       </div>
@@ -303,14 +286,14 @@ export default function MapPage() {
           style={{
             display: 'inline-block',
             padding: '8px 12px',
-            backgroundColor: isDarkTheme ? 'var(--card)' : '#ffffff',
-            color: isDarkTheme ? 'var(--text)' : '#2a1f1a',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)', // Полупрозрачный темный фон
+            color: '#ffffff', // Белый текст
             textDecoration: 'none',
             borderRadius: '6px',
             fontSize: '14px',
             fontWeight: '500',
-            border: `1px solid ${isDarkTheme ? 'var(--border)' : '#d9cfc6'}`,
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            border: '1px solid #ffffff',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.5)'
           }}
         >
           {t('showAllPlaces') || 'Показать все места'}

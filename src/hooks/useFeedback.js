@@ -16,8 +16,7 @@ export function useFeedback(placeId) {
         .select(`
           *,
           users (
-            full_name,
-            avatar_url
+            full_name
           )
         `)
         .eq("place_id", placeId)

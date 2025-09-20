@@ -62,6 +62,10 @@ export function usePlaces(categoryId = null) {
             name_ru,
             name_en,
             name_kz
+          ),
+          place_photos (
+            id,
+            url
           )
         `);
 
@@ -77,7 +81,18 @@ export function usePlaces(categoryId = null) {
 
       if (error) throw error;
       
-      setPlaces(data || []);
+      // Limit to first photo only for list views
+      const placesWithLimitedPhotos = data.map(place => {
+        if (place.place_photos && Array.isArray(place.place_photos)) {
+          return {
+            ...place,
+            place_photos: place.place_photos.slice(0, 1) // Only first photo for performance
+          };
+        }
+        return place;
+      });
+      
+      setPlaces(placesWithLimitedPhotos || []);
     } catch (err) {
       setError(err.message);
       console.error("Error fetching places:", err);
@@ -114,16 +129,21 @@ export function usePlace(placeId) {
         throw new Error("Invalid place ID");
       }
 
+      // Fetch place data with photos
       const { data, error } = await supabase
         .from("places")
         .select(
           `
           *,
-          categories (
+          categories (  
             id,
             name_ru,
             name_en,
             name_kz
+          ),
+          place_photos (
+            id,
+            url
           )
         `
         )
@@ -194,7 +214,6 @@ export function useMapPlaces() {
           name_ru,
           name_en,
           name_kz,
-          image,
           lat,
           lng,
           category_id,
@@ -203,6 +222,10 @@ export function useMapPlaces() {
             name_ru,
             name_en,
             name_kz
+          ),
+          place_photos (
+            id,
+            url
           )
         `)
         .not('lat', 'is', null)
@@ -211,7 +234,18 @@ export function useMapPlaces() {
 
       if (error) throw error;
       
-      setPlaces(data || []);
+      // Limit to first photo only for map views
+      const placesWithLimitedPhotos = data.map(place => {
+        if (place.place_photos && Array.isArray(place.place_photos)) {
+          return {
+            ...place,
+            place_photos: place.place_photos.slice(0, 1) // Only first photo for performance
+          };
+        }
+        return place;
+      });
+      
+      setPlaces(placesWithLimitedPhotos || []);
     } catch (err) {
       setError(err.message);
       console.error("Error fetching map places:", err);

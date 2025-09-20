@@ -194,11 +194,7 @@ export default function FeedbackSection({ placeId }) {
                 <div className="feedback-header">
                   <div className="user-info">
                     <div className="avatar">
-                      {item.users?.avatar_url ? (
-                        <img src={item.users.avatar_url} alt="Avatar" />
-                      ) : (
-                        <div className="avatar-placeholder">👤</div>
-                      )}
+                      <div className="avatar-placeholder">👤</div>
                     </div>
                     <div className="user-details">
                       <span className="user-name">
