@@ -88,7 +88,7 @@ export default function PlaceSlider() {
 
       <div className="slider" style={{ position: "relative" }}>
         {/* Основное изображение */}
-        <div className="slide" style={{ position: "relative", height: "300px" }}>
+        <div className="slide" style={{ position: "relative", height: "500px" }}>
           {(currentPlace.place_photos && currentPlace.place_photos.length > 0) ? (
             <ImageLoader
               src={currentPlace.place_photos[0].url}
