@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabase";
+import { Helmet } from "react-helmet-async";
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
@@ -79,9 +80,6 @@ export default function ProfilePage() {
     }
   };
 
-
-
-
   if (!user) {
     return (
       <div className="auth-container">
@@ -99,6 +97,9 @@ export default function ProfilePage() {
 
   return (
     <div className="profile-container">
+      <Helmet>
+        <title>Профиль - Apex Tourism</title>
+      </Helmet>
       <div className="profile-card">
         <h2>Профиль</h2>
         {error && <div className="error-message">{error}</div>}

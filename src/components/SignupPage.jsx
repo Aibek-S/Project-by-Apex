@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { Helmet } from "react-helmet-async";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -50,6 +51,9 @@ export default function SignupPage() {
 
   return (
     <div className="auth-container">
+      <Helmet>
+        <title>Регистрация - Apex Tourism</title>
+      </Helmet>
       <div className="auth-form">
         <h2>Регистрация</h2>
         

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { usePlaces, getImageUrl } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import ImageLoader from "./ImageLoader";
+import { Helmet } from "react-helmet-async";
 
 export default function PlaceSlider() {
   const { places, loading, error } = usePlaces(); // Получаем все места
@@ -82,6 +83,9 @@ export default function PlaceSlider() {
 
   return (
     <section className="place-slider" style={{ marginBottom: 32 }}>
+      <Helmet>
+        <title>{t("featuredPlaces") || "Рекомендуемые места"} - Apex Tourism</title>
+      </Helmet>
       <h2 style={{ marginBottom: 16 }}>
         {t("featuredPlaces") || "Рекомендуемые места"}
       </h2>

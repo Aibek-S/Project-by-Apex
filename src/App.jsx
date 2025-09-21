@@ -1,6 +1,7 @@
 // Импортируем маршрутизатор и компоненты
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import { HelmetProvider } from "react-helmet-async";
 // Общие компоненты шапки/подвала
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
@@ -21,55 +22,57 @@ const MapPage = lazy(() => import("./pages/MapPage.jsx"));
 // Корневой компонент приложения: шапка, маршрутизация, подвал
 export default function App() {
   return (
-    <div className="app-shell">
-      <Header />
-      <main className="app-main">
-        <Routes>
-          {/* Аутентификация */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route 
-            path="/profile" 
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            } 
-          />
-          
-          {/* Настройки */}
-          <Route path="/settings" element={<SettingsPage />} />
-          
-          {/* Главная */}
-          <Route path="/" element={<HomePage />} />
-          {/* Страница категории */}
-          <Route path="/category/:id" element={<PlaceList />} />
-          {/* Страница конкретного места */}
-          <Route path="/place/:id" element={<PlaceDetail />} />
-          {/* Карта с ленивой загрузкой */}
-          <Route 
-            path="/map" 
-            element={
-              <Suspense fallback={
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '100vh',
-                  fontSize: '18px'
-                }}>
-                  Загрузка карты...
-                </div>
-              }>
-                <MapPage />
-              </Suspense>
-            } 
-          />
-          {/* Редирект на главную, если адрес не найден */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <HelmetProvider>
+      <div className="app-shell">
+        <Header />
+        <main className="app-main">
+          <Routes>
+            {/* Аутентификация */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Настройки */}
+            <Route path="/settings" element={<SettingsPage />} />
+            
+            {/* Главная */}
+            <Route path="/" element={<HomePage />} />
+            {/* Страница категории */}
+            <Route path="/category/:id" element={<PlaceList />} />
+            {/* Страница конкретного места */}
+            <Route path="/place/:id" element={<PlaceDetail />} />
+            {/* Карта с ленивой загрузкой */}
+            <Route 
+              path="/map" 
+              element={
+                <Suspense fallback={
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100vh',
+                    fontSize: '18px'
+                  }}>
+                    Загрузка карты...
+                  </div>
+                }>
+                  <MapPage />
+                </Suspense>
+              } 
+            />
+            {/* Редирект на главную, если адрес не найден */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </HelmetProvider>
   );
 }

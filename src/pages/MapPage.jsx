@@ -5,6 +5,7 @@ import L from 'leaflet';
 import { useMapPlaces, getImageUrl } from '../hooks/useSupabase';
 import { useLanguage } from '../contexts/LanguageContext';
 import ImageLoader from "../components/ImageLoader";
+import { Helmet } from "react-helmet-async";
 
 // Импорт стилей Leaflet
 import 'leaflet/dist/leaflet.css';
@@ -84,14 +85,6 @@ export default function MapPage() {
     }
   }, [placeId, places]);
 
-  // Обновление заголовка страницы
-  useEffect(() => {
-    document.title = `${t('map') || 'Карта'} - Мангистау`;
-    return () => {
-      document.title = 'Мангистау';
-    };
-  }, [language, t]);
-
   if (loading) {
     return (
       <div style={{
@@ -138,6 +131,9 @@ export default function MapPage() {
       width: '100%',
       backgroundColor: '#1a1a1a' // Темный фон для лучшей контрастности со спутниковой картой
     }}>
+      <Helmet>
+        <title>{t('map') || 'Карта'} - Apex Tourism</title>
+      </Helmet>
       <MapContainer
         center={mapCenter}
         zoom={9} // Увеличенный начальный zoom для лучшей видимости

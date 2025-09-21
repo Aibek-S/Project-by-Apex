@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { usePlaces, useCategories } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import PlaceCard from "./Placecard";
+import { Helmet } from "react-helmet-async";
 
 export default function PlaceList() {
   const { id } = useParams();
@@ -52,6 +53,13 @@ export default function PlaceList() {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          {category 
+            ? `${getLocalizedField(category, "name")} - ${t("categories") || "Категории"}`
+            : (t("places") || "Места")}
+        </title>
+      </Helmet>
       <div style={{ marginBottom: 24 }}>
         <Link
           className="btn"

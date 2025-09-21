@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
+import { Helmet } from "react-helmet-async";
 
 export default function SettingsPage() {
   const { language, changeLanguage, t } = useLanguage();
@@ -77,6 +78,9 @@ export default function SettingsPage() {
 
   return (
     <div className="settings-container">
+      <Helmet>
+        <title>{t("settings") || "Настройки"} - Apex Tourism</title>
+      </Helmet>
       <div className="settings-form">
         <div className="settings-header">
           <h2>⚙️ {t("settings")}</h2>
@@ -134,8 +138,6 @@ export default function SettingsPage() {
               </div>
             </div>
           </div>
-          
-
         </div>
         
         <div className="settings-footer">

@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import SearchSection from "./SearchSection";
 import PlaceSlider from "./PlaceSlider";
 import CategoryList from "./CategoryList";
@@ -8,6 +9,9 @@ export default function HomePage() {
 
   return (
     <div>
+      <Helmet>
+        <title>{t("home") || "Главная - Apex Tourism"}</title>
+      </Helmet>
       {/* Секция поиска */}
       <SearchSection />
 

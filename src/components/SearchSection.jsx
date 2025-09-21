@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { usePlaces } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import Placecard from "./Placecard";
+import { Helmet } from "react-helmet-async";
 
 export default function SearchSection() {
   const [query, setQuery] = useState("");
@@ -43,6 +44,9 @@ export default function SearchSection() {
 
   return (
     <section className="search-section" style={{ marginBottom: 32 }}>
+      <Helmet>
+        <title>{t("search") || "Поиск"} - Apex Tourism</title>
+      </Helmet>
       <h3 style={{ marginBottom: 16 }}>{t("search") || "Поиск мест"}</h3>
 
       {/* Поле поиска */}

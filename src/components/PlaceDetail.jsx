@@ -4,6 +4,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import FeedbackSection from "./FeedbackSection";
 import { useState } from "react";
 import ImageLoader from "./ImageLoader";
+import { Helmet } from "react-helmet-async";
 
 export default function PlaceDetail() {
   const { id } = useParams();
@@ -93,6 +94,13 @@ export default function PlaceDetail() {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          {place 
+            ? `${getLocalizedField(place, "name")} - ${t("details") || "Подробности"}`
+            : (t("placeDetails") || "Детали места")}
+        </title>
+      </Helmet>
       <div style={{ marginBottom: 24 }}>
         <Link
           className="btn"

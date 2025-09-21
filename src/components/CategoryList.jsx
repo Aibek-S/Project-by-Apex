@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCategories } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
+import { Helmet } from "react-helmet-async";
 
 export default function CategoryList() {
   const { categories, loading, error } = useCategories();
@@ -58,6 +59,9 @@ export default function CategoryList() {
 
   return (
     <div>
+      <Helmet>
+        <title>{t("categories") || "Категории"} - Apex Tourism</title>
+      </Helmet>
       <h2>{t("categories")}</h2>
       <p className="muted" style={{ marginBottom: 24 }}>
         {t("selectCategory")}
