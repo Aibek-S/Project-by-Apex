@@ -35,6 +35,7 @@ const translations = {
     showAllPlaces: "Показать все места",
     settingsSaved: "Настройки сохранены",
     Move: "Перейти",
+    legends: "Легенды",
   },
   en: {
     home: "Home",
@@ -67,6 +68,7 @@ const translations = {
     showAllPlaces: "Show all places",
     settingsSaved: "Settings saved",
     Move: "Open",
+    legends: "Legends",
   },
   kz: {
     home: "Басты бет",
@@ -99,6 +101,7 @@ const translations = {
     showAllPlaces: "Барлық орындарды көрсету",
     settingsSaved: "Баптаулар сақталды",
     Move: "Ашу",
+    legends: "Легендалар",
   },
 };
 
@@ -121,7 +124,7 @@ export function LanguageProvider({ children }) {
   const getLocalizedField = (obj, fieldName) => {
     if (!obj) return "";
     const localizedField = `${fieldName}_${language}`;
-    return obj[localizedField] || obj[`${fieldName}_ru`] || "";
+    return obj[localizedField] || obj[`${fieldName}_ru`] || obj[`${fieldName}_en`] || obj[`${fieldName}_kz`] || "";
   };
 
   const value = {

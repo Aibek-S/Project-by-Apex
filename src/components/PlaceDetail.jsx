@@ -219,6 +219,18 @@ export default function PlaceDetail() {
             <p style={{ lineHeight: 1.6, fontSize: "1.1em" }}>
               {getLocalizedField(place, "description")}
             </p>
+            
+            {/* Display legends after description if they exist */}
+            {(place.legends_ru || place.legends_en || place.legends_kz) && (
+              <div style={{ marginTop: 24 }}>
+                <h3 style={{ marginBottom: 12, color: "var(--text-secondary)" }}>
+                  {t("legends")}
+                </h3>
+                <p style={{ lineHeight: 1.6, fontSize: "1em", fontStyle: "italic" }}>
+                  {getLocalizedField(place, "legends")}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Кнопка "Показать на карте" - только если у места есть координаты */}
