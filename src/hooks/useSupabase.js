@@ -256,3 +256,202 @@ export function useMapPlaces() {
 
   return { places, loading, error, refetch: fetchMapPlaces };
 }
+
+// Hook to fetch all tours
+export function useTours() {
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchTours = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Check if supabase client is properly configured
+      if (!supabase) {
+        throw new Error("Supabase client is not properly configured. Check your .env file.");
+      }
+
+      // Fetch tours with associated places, ordered by position
+      const { data, error } = await supabase
+        .from("tours")
+        .select(`
+          *,
+          tour_places (
+            position,
+            places (
+              id,
+              name_ru,
+              name_en,
+              name_kz,
+              place_photos (
+                id,
+                url
+              )
+            )
+          )
+        `)
+        .order("id");
+
+      if (error) throw error;
+      
+      // Sort places within each tour by position
+      const toursWithSortedPlaces = data.map(tour => {
+        if (tour.tour_places) {
+          // Sort tour_places by position
+          tour.tour_places.sort((a, b) => (a.position || 0) - (b.position || 0));
+        }
+        return tour;
+      });
+      
+      setTours(toursWithSortedPlaces || []);
+    } catch (err) {
+      setError(err.message);
+      console.error("Error fetching tours:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTours();
+  }, [fetchTours]);
+
+  return { tours, loading, error, refetch: fetchTours };
+}
+
+// Hook to fetch a single tour by ID
+export function useTour(tourId) {
+  const [tour, setTour] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchTour = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Check if supabase client is properly configured
+      if (!supabase) {
+        throw new Error("Supabase client is not properly configured. Check your .env file.");
+      }
+
+      // Convert tourId to number to match database type
+      const numericTourId = parseInt(tourId, 10);
+      if (isNaN(numericTourId)) {
+        throw new Error("Invalid tour ID");
+      }
+
+      // Fetch tour data with associated places, ordered by position
+      const { data, error } = await supabase
+        .from("tours")
+        .select(`
+          *,
+          tour_places (
+            position,
+            places (
+              id,
+              name_ru,
+              name_en,
+              name_kz,
+              description_ru,
+              description_en,
+              description_kz,
+              legends_ru,
+              legends_en,
+              legends_kz,
+              place_photos (
+                id,
+                url
+              )
+            )
+          )
+        `)
+        .eq("id", numericTourId)
+        .single();
+
+      if (error) throw error;
+      
+      // Sort places by position
+      if (data && data.tour_places) {
+        data.tour_places.sort((a, b) => (a.position || 0) - (b.position || 0));
+      }
+      
+      setTour(data);
+    } catch (err) {
+      setError(err.message);
+      console.error("Error fetching tour:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [tourId]);
+
+  useEffect(() => {
+    if (tourId) {
+      fetchTour();
+    } else {
+      setTour(null);
+      setLoading(false);
+    }
+  }, [tourId, fetchTour]);
+
+  return { tour, loading, error, refetch: fetchTour };
+}
+
+// Hook to fetch tours for a specific place
+export function useToursByPlace(placeId) {
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchToursByPlace = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Check if supabase client is properly configured
+      if (!supabase) {
+        throw new Error("Supabase client is not properly configured. Check your .env file.");
+      }
+
+      // Convert placeId to number to match database type
+      const numericPlaceId = parseInt(placeId, 10);
+      if (isNaN(numericPlaceId)) {
+        throw new Error("Invalid place ID");
+      }
+
+      // Fetch tours that include this place
+      const { data, error } = await supabase
+        .from("tours")
+        .select(`
+          *,
+          tour_places (
+            position,
+            place_id
+          )
+        `)
+        .eq("tour_places.place_id", numericPlaceId);
+
+      if (error) throw error;
+      
+      setTours(data || []);
+    } catch (err) {
+      setError(err.message);
+      console.error("Error fetching tours for place:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [placeId]);
+
+  useEffect(() => {
+    if (placeId) {
+      fetchToursByPlace();
+    } else {
+      setTours([]);
+      setLoading(false);
+    }
+  }, [placeId, fetchToursByPlace]);
+
+  return { tours, loading, error, refetch: fetchToursByPlace };
+}

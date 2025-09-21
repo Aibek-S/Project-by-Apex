@@ -1,15 +1,18 @@
 import { useParams, Link } from "react-router-dom";
 import { usePlace, getImageUrl } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useToursByPlace } from "../hooks/useSupabase";
 import FeedbackSection from "./FeedbackSection";
 import { useState } from "react";
 import ImageLoader from "./ImageLoader";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import TourCard from "./TourCard";
 
 export default function PlaceDetail() {
   const { id } = useParams();
   const { place, loading, error } = usePlace(id);
+  const { tours, loading: toursLoading, error: toursError } = useToursByPlace(id);
   const { t, getLocalizedField } = useLanguage();
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
 
@@ -255,12 +258,63 @@ export default function PlaceDetail() {
         </motion.div>
       </div>
 
-      {/* Feedback Section */}
+      {/* Tours for this place */}
       <motion.div 
         style={{ marginTop: 40 }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+      >
+        <h2 style={{ marginBottom: 24 }}>
+          {t("availableTours") || "Available Tours"}
+        </h2>
+        
+        {toursLoading ? (
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            minHeight: '100px' 
+          }}>
+            <p className="muted">{t("loading")}</p>
+          </div>
+        ) : toursError ? (
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            minHeight: '100px' 
+          }}>
+            <p className="muted">{t("errorLoadingTours") || "Error loading tours"}</p>
+          </div>
+        ) : tours && tours.length > 0 ? (
+          <div className="grid" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
+            gap: 24 
+          }}>
+            {tours.map((tour) => (
+              <TourCard key={tour.id} tour={tour} />
+            ))}
+          </div>
+        ) : (
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            minHeight: '100px' 
+          }}>
+            <p className="muted">{t("noToursForThisPlace") || "No tours available for this place"}</p>
+          </div>
+        )}
+      </motion.div>
+
+      {/* Feedback Section */}
+      <motion.div 
+        style={{ marginTop: 40 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
       >
         <FeedbackSection placeId={place.id} />
       </motion.div>

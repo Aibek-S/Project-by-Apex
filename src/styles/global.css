@@ -392,7 +392,7 @@ a:active {
     width: 100%;
     overflow: hidden;
     border-radius: 12px;
-    background: var(--card);
+    background: var(--bg);
     border: 1px solid var(--border);
 }
 
@@ -429,7 +429,7 @@ a:active {
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
-    width: 38px;
+    width: 16px;
     height: 38px;
     border-radius: 999px;
     border: 1px solid var(--border);

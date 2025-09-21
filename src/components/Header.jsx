@@ -125,6 +125,7 @@ export default function Header() {
         {/* Навигация для десктопа */}
         <nav className="desktop-nav">
           <NavLink to="/">{t("home")}</NavLink>
+          <NavLink to="/tours">{t("tours") || "Tours"}</NavLink>
           <NavLink to="/map">{t("map") || "Карта"}</NavLink>
           {user ? (
             <NavLink to="/profile">Профиль</NavLink>
@@ -149,6 +150,7 @@ export default function Header() {
               onClick={handleMenuClick}
             >
               <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>{t("home")}</NavLink>
+              <NavLink to="/tours" onClick={() => setMobileMenuOpen(false)}>{t("tours") || "Tours"}</NavLink>
               <NavLink to="/map" onClick={() => setMobileMenuOpen(false)}>{t("map") || "Карта"}</NavLink>
               {user ? (
                 <NavLink to="/profile" onClick={() => setMobileMenuOpen(false)}>Профиль</NavLink>
