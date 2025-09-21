@@ -1,0 +1,168 @@
+/* Centralized animation utilities */
+:root {
+  /* Animation durations */
+  --transition-fast: 200ms;
+  --transition-medium: 300ms;
+  --transition-slow: 400ms;
+  
+  /* Easing functions */
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Base transition classes */
+.transition-fast {
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.transition-medium {
+  transition: all var(--transition-medium) var(--easing-standard);
+}
+
+.transition-slow {
+  transition: all var(--transition-slow) var(--easing-standard);
+}
+
+/* Opacity transitions */
+.fade-in {
+  opacity: 1;
+  transition: opacity var(--transition-medium) var(--easing-standard);
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity var(--transition-medium) var(--easing-standard);
+}
+
+/* Scale transitions */
+.scale-hover {
+  transition: transform var(--transition-fast) var(--easing-standard);
+}
+
+.scale-hover:hover {
+  transform: scale(1.05);
+}
+
+.scale-hover-sm {
+  transition: transform var(--transition-fast) var(--easing-standard);
+}
+
+.scale-hover-sm:hover {
+  transform: scale(1.03);
+}
+
+/* Button transitions */
+.btn {
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.card-hover:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Theme transition */
+body {
+  transition: background-color var(--transition-medium) var(--easing-standard),
+              color var(--transition-medium) var(--easing-standard);
+}
+
+/* Slide animations */
+.slide-in-left {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform var(--transition-medium) var(--easing-standard),
+              opacity var(--transition-medium) var(--easing-standard);
+}
+
+.slide-in-left.from-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.slide-in-right {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform var(--transition-medium) var(--easing-standard),
+              opacity var(--transition-medium) var(--easing-standard);
+}
+
+.slide-in-right.from-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-in-up {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform var(--transition-medium) var(--easing-standard),
+              opacity var(--transition-medium) var(--easing-standard);
+}
+
+.slide-in-up.from-bottom {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+/* Modal animations */
+.modal-enter {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform var(--transition-medium) var(--easing-standard),
+              opacity var(--transition-medium) var(--easing-standard);
+}
+
+.modal-enter-active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Image gallery animations */
+.gallery-image {
+  transition: opacity var(--transition-medium) var(--easing-standard);
+}
+
+.gallery-image.fade-out {
+  opacity: 0;
+}
+
+.gallery-image.fade-in {
+  opacity: 1;
+}
+
+/* Loading animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading-pulse {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}

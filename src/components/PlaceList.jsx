@@ -3,6 +3,7 @@ import { usePlaces, useCategories } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import PlaceCard from "./Placecard";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 export default function PlaceList() {
   const { id } = useParams();
@@ -52,7 +53,11 @@ export default function PlaceList() {
   }
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
       <Helmet>
         <title>
           {category 
@@ -84,12 +89,25 @@ export default function PlaceList() {
           <p className="muted">{t("noData")}</p>
         </div>
       ) : (
-        <div className="grid" style={{ marginTop: 12 }}>
-          {places.map((place) => (
-            <PlaceCard key={place.id} place={place} />
+        <motion.div 
+          className="grid" 
+          style={{ marginTop: 12 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+        >
+          {places.map((place, index) => (
+            <motion.div
+              key={place.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <PlaceCard place={place} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }

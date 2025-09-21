@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import { LanguageProvider } from "./contexts/LanguageContext.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import "./styles/global.css";
+import "./styles/animations.css";
 
 // Находим контейнер для рендера и инициализируем корень React 18
 const container = document.getElementById("root");

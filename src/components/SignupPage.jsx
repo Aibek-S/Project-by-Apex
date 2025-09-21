@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -50,11 +51,21 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="auth-container">
+    <motion.div
+      className="auth-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
       <Helmet>
         <title>Регистрация - Apex Tourism</title>
       </Helmet>
-      <div className="auth-form">
+      <motion.div
+        className="auth-form"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+      >
         <h2>Регистрация</h2>
         
         {error && <div className="error-message">{error}</div>}
@@ -94,13 +105,16 @@ export default function SignupPage() {
             />
           </div>
           
-          <button 
+          <motion.button 
             type="submit" 
             disabled={loading}
             className="btn"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
           >
             {loading ? "Регистрация..." : "Зарегистрироваться"}
-          </button>
+          </motion.button>
         </form>
         
         <div className="auth-links">
@@ -108,7 +122,7 @@ export default function SignupPage() {
             Уже есть аккаунт? <Link to="/login">Войти</Link>
           </p>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

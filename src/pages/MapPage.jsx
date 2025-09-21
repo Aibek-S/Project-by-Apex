@@ -6,6 +6,7 @@ import { useMapPlaces, getImageUrl } from '../hooks/useSupabase';
 import { useLanguage } from '../contexts/LanguageContext';
 import ImageLoader from "../components/ImageLoader";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 // Импорт стилей Leaflet
 import 'leaflet/dist/leaflet.css';
@@ -126,11 +127,16 @@ export default function MapPage() {
   };
 
   return (
-    <div style={{ 
-      height: '100vh', 
-      width: '100%',
-      backgroundColor: '#1a1a1a' // Темный фон для лучшей контрастности со спутниковой картой
-    }}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      style={{ 
+        height: '100vh', 
+        width: '100%',
+        backgroundColor: '#1a1a1a' // Темный фон для лучшей контрастности со спутниковой картой
+      }}
+    >
       <Helmet>
         <title>{t('map') || 'Карта'} - Apex Tourism</title>
       </Helmet>
@@ -169,12 +175,17 @@ export default function MapPage() {
                 maxWidth={300}
                 className="custom-popup" // Убираем зависимость от темы
               >
-                <div style={{ 
-                  padding: '8px',
-                  fontFamily: 'inherit',
-                  backgroundColor: '#ffffff', // Фиксированный цвет фона
-                  color: '#2a1f1a' // Фиксированный цвет текста
-                }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ 
+                    padding: '8px',
+                    fontFamily: 'inherit',
+                    backgroundColor: '#ffffff', // Фиксированный цвет фона
+                    color: '#2a1f1a' // Фиксированный цвет текста
+                  }}
+                >
                   {/* Название места */}
                   <h3 style={{ 
                     margin: '0 0 12px 0',
@@ -229,7 +240,7 @@ export default function MapPage() {
                   {/* Кнопка "Подробнее" */}
                   <Link
                     to={`/place/${place.id}`}
-                    className="btn"
+                    className="btn scale-hover"
                     style={{
                       display: 'inline-block',
                       padding: '8px 16px',
@@ -245,7 +256,7 @@ export default function MapPage() {
                   >
                     {t('details') || 'Подробнее'}
                   </Link>
-                </div>
+                </motion.div>
               </Popup>
             </Marker>
           );
@@ -253,32 +264,42 @@ export default function MapPage() {
       </MapContainer>
 
       {/* Информация о количестве мест */}
-      <div style={{
-        position: 'absolute',
-        top: '80px',
-        right: '10px',
-        background: 'rgba(0, 0, 0, 0.7)', // Полупрозрачный темный фон
-        border: '1px solid #ffffff',
-        borderRadius: '6px',
-        padding: '8px 12px',
-        fontSize: '14px',
-        color: '#ffffff', // Белый текст для лучшей видимости на спутниковой карте
-        zIndex: 1000,
-        boxShadow: '0 2px 4px rgba(0,0,0,0.5)'
-      }}>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+        style={{
+          position: 'absolute',
+          top: '80px',
+          right: '10px',
+          background: 'rgba(0, 0, 0, 0.7)', // Полупрозрачный темный фон
+          border: '1px solid #ffffff',
+          borderRadius: '6px',
+          padding: '8px 12px',
+          fontSize: '14px',
+          color: '#ffffff', // Белый текст для лучшей видимости на спутниковой карте
+          zIndex: 1000,
+          boxShadow: '0 2px 4px rgba(0,0,0,0.5)'
+        }}
+      >
         {t('placesOnMap') || 'Мест на карте'}: {places.length}
-      </div>
+      </motion.div>
       
       {/* Кнопка возврата к обзору карты */}
-      <div style={{
-        position: 'absolute',
-        top: '80px',
-        left: '10px',
-        zIndex: 1000
-      }}>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+        style={{
+          position: 'absolute',
+          top: '80px',
+          left: '10px',
+          zIndex: 1000
+        }}
+      >
         <Link
           to="/map"
-          className="btn"
+          className="btn scale-hover"
           style={{
             display: 'inline-block',
             padding: '8px 12px',
@@ -294,7 +315,7 @@ export default function MapPage() {
         >
           {t('showAllPlaces') || 'Показать все места'}
         </Link>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

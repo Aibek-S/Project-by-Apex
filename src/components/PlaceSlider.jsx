@@ -4,6 +4,7 @@ import { usePlaces, getImageUrl } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import ImageLoader from "./ImageLoader";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 export default function PlaceSlider() {
   const { places, loading, error } = usePlaces(); // Получаем все места
@@ -93,48 +94,59 @@ export default function PlaceSlider() {
       <div className="slider" style={{ position: "relative" }}>
         {/* Основное изображение */}
         <div className="slide" style={{ position: "relative", height: "500px" }}>
-          {(currentPlace.place_photos && currentPlace.place_photos.length > 0) ? (
-            <ImageLoader
-              src={currentPlace.place_photos[0].url}
-              alt={getLocalizedField(currentPlace, "name")}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "12px",
-                filter: "sepia(0.25) contrast(1.05) saturate(0.95)",
-              }}
-            />
-          ) : currentPlace.image ? (
-            <ImageLoader
-              src={getImageUrl(currentPlace.image)}
-              alt={getLocalizedField(currentPlace, "name")}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "12px",
-                filter: "sepia(0.25) contrast(1.05) saturate(0.95)",
-              }}
-            />
-          ) : (
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "var(--card)",
-                borderRadius: "12px",
-                border: "1px solid var(--border)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <p className="muted">{t("noImage") || "Нет изображения"}</p>
-            </div>
-          )}
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          >
+            {(currentPlace.place_photos && currentPlace.place_photos.length > 0) ? (
+              <ImageLoader
+                src={currentPlace.place_photos[0].url}
+                alt={getLocalizedField(currentPlace, "name")}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "12px",
+                  filter: "sepia(0.25) contrast(1.05) saturate(0.95)",
+                }}
+              />
+            ) : currentPlace.image ? (
+              <ImageLoader
+                src={getImageUrl(currentPlace.image)}
+                alt={getLocalizedField(currentPlace, "name")}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "12px",
+                  filter: "sepia(0.25) contrast(1.05) saturate(0.95)",
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  background: "var(--card)",
+                  borderRadius: "12px",
+                  border: "1px solid var(--border)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <p className="muted">{t("noImage") || "Нет изображения"}</p>
+              </div>
+            )}
+          </motion.div>
 
           {/* Информация о месте */}
-          <div
+          <motion.div
             className="slide-caption"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
             style={{
               width: "320px",
               position: "absolute",
@@ -165,22 +177,25 @@ export default function PlaceSlider() {
                 </p>
               </div>
               <Link
-                className="btn"
+                className="btn scale-hover"
                 to={`/place/${currentPlace.id}`}
                 style={{ flexShrink: 0 }}
               >
                 {t("details") || "Подробнее"}
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Кнопки навигации */}
         {featuredPlaces.length > 1 && (
           <>
-            <button
+            <motion.button
               className="slider-btn left"
               onClick={prevSlide}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
               style={{
                 position: "absolute",
                 left: "12px",
@@ -202,11 +217,14 @@ export default function PlaceSlider() {
               aria-label={t("previous") || "Предыдущее"}
             >
               ‹
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               className="slider-btn right"
               onClick={nextSlide}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
               style={{
                 position: "absolute",
                 right: "12px",
@@ -228,7 +246,7 @@ export default function PlaceSlider() {
               aria-label={t("next") || "Следующее"}
             >
               ›
-            </button>
+            </motion.button>
           </>
         )}
       </div>

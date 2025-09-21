@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabase";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
@@ -96,11 +97,21 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="profile-container">
+    <motion.div 
+      className="profile-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
       <Helmet>
         <title>Профиль - Apex Tourism</title>
       </Helmet>
-      <div className="profile-card">
+      <motion.div 
+        className="profile-card"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+      >
         <h2>Профиль</h2>
         {error && <div className="error-message">{error}</div>}
         {message && <div className="success-message">{message}</div>}
@@ -131,24 +142,30 @@ export default function ProfilePage() {
                 />
                 
               </div>
-              <button 
+              <motion.button 
                 type="submit" 
                 disabled={loading}
                 className="profile-submit-button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
               >
                 {loading ? "Сохранение..." : "Сохранить изменения"}
-              </button>
+              </motion.button>
             </form>
           </div>
         </div>
-        <button 
+        <motion.button 
           onClick={handleSignOut} 
           disabled={loading}
           className="signout-button"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         >
           {loading ? "Выход..." : "Выйти"}
-        </button>
-      </div>
-    </div>
+        </motion.button>
+      </motion.div>
+    </motion.div>
   );
 }

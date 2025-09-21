@@ -5,6 +5,7 @@ import FeedbackSection from "./FeedbackSection";
 import { useState } from "react";
 import ImageLoader from "./ImageLoader";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 export default function PlaceDetail() {
   const { id } = useParams();
@@ -93,7 +94,11 @@ export default function PlaceDetail() {
   const hasPhotos = allPhotos.length > 0;
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
       <Helmet>
         <title>
           {place 
@@ -114,7 +119,12 @@ export default function PlaceDetail() {
       <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 24 }}>
         {/* Photo Gallery */}
         {hasPhotos ? (
-          <div style={{ marginBottom: 16 }}>
+          <motion.div 
+            style={{ marginBottom: 16 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+          >
             {/* Main photo display */}
             <div style={{ 
               position: 'relative',
@@ -142,7 +152,7 @@ export default function PlaceDetail() {
                 flexWrap: 'wrap'
               }}>
                 {allPhotos.map((photo, index) => (
-                  <div 
+                  <motion.div 
                     key={index}
                     style={{
                       width: '60px',
@@ -157,6 +167,9 @@ export default function PlaceDetail() {
                       flex: '0 0 auto'
                     }}
                     onClick={() => setSelectedPhotoIndex(index)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                   >
                     <ImageLoader
                       src={photo} // Use the URL directly
@@ -166,11 +179,11 @@ export default function PlaceDetail() {
                         height: '100%'
                       }}
                     />
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             )}
-          </div>
+          </motion.div>
         ) : (
           <div style={{ 
             width: '100%',
@@ -187,7 +200,11 @@ export default function PlaceDetail() {
           </div>
         )}
 
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+        >
           <h1 style={{ marginBottom: 16 }}>
             {getLocalizedField(place, "name")}
           </h1>
@@ -209,7 +226,7 @@ export default function PlaceDetail() {
             <div style={{ marginTop: 24 }}>
               <Link
                 to={`/map?place=${place.id}`}
-                className="btn"
+                className="btn scale-hover"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -223,13 +240,18 @@ export default function PlaceDetail() {
               </Link>
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
 
       {/* Feedback Section */}
-      <div style={{ marginTop: 40 }}>
+      <motion.div 
+        style={{ marginTop: 40 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+      >
         <FeedbackSection placeId={place.id} />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

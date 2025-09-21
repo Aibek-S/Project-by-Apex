@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   // Языковой контекст
@@ -79,6 +80,26 @@ export default function Header() {
     };
   }, [mobileMenuOpen]);
   
+  // Mobile menu variants for framer-motion
+  const mobileMenuVariants = {
+    closed: {
+      x: "-100%",
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    },
+    open: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    }
+  };
+  
   return (
     // Контейнер шапки
     <header className="site-header">
@@ -117,24 +138,30 @@ export default function Header() {
         </nav>
         
         {/* Мобильное меню */}
-        {mobileMenuOpen && (
-          <nav 
-            className="mobile-nav"
-            onClick={handleMenuClick}
-          >
-            <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>{t("home")}</NavLink>
-            <NavLink to="/map" onClick={() => setMobileMenuOpen(false)}>{t("map") || "Карта"}</NavLink>
-            {user ? (
-              <NavLink to="/profile" onClick={() => setMobileMenuOpen(false)}>Профиль</NavLink>
-            ) : (
-              <>
-                <NavLink to="/login" onClick={() => setMobileMenuOpen(false)}>Вход</NavLink>
-                <NavLink to="/signup" onClick={() => setMobileMenuOpen(false)}>Регистрация</NavLink>
-              </>
-            )}
-            <NavLink to="/settings" onClick={() => setMobileMenuOpen(false)}>{t("settings")}</NavLink>
-          </nav>
-        )}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.nav 
+              className="mobile-nav"
+              variants={mobileMenuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              onClick={handleMenuClick}
+            >
+              <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>{t("home")}</NavLink>
+              <NavLink to="/map" onClick={() => setMobileMenuOpen(false)}>{t("map") || "Карта"}</NavLink>
+              {user ? (
+                <NavLink to="/profile" onClick={() => setMobileMenuOpen(false)}>Профиль</NavLink>
+              ) : (
+                <>
+                  <NavLink to="/login" onClick={() => setMobileMenuOpen(false)}>Вход</NavLink>
+                  <NavLink to="/signup" onClick={() => setMobileMenuOpen(false)}>Регистрация</NavLink>
+                </>
+              )}
+              <NavLink to="/settings" onClick={() => setMobileMenuOpen(false)}>{t("settings")}</NavLink>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

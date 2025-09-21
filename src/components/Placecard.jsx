@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import { getImageUrl } from "../hooks/useSupabase";
 import ImageLoader from "./ImageLoader";
+import { motion } from "framer-motion";
 
 export default function PlaceCard({ place }) {
   const { getLocalizedField, t } = useLanguage();
@@ -20,7 +21,14 @@ export default function PlaceCard({ place }) {
   const imageAlt = getLocalizedField(place, 'name');
 
   return (
-    <article className="card">
+    <motion.article 
+      className="card card-hover"
+      whileHover={{ 
+        scale: 1.03,
+        transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
+      }}
+      whileTap={{ scale: 0.98 }}
+    >
       {imageUrl && (
         <div style={{ height: "160px" }}>
           <ImageLoader
@@ -39,10 +47,10 @@ export default function PlaceCard({ place }) {
         <p className="muted" style={{ minHeight: 42 }}>
           {getLocalizedField(place, "description").slice(0, 100)}....
         </p>
-        <Link className="btn" to={`/place/${place.id}`}>
+        <Link className="btn scale-hover" to={`/place/${place.id}`}>
           {t("details") || "Подробнее"}
         </Link>
       </div>
-    </article>
+    </motion.article>
   );
 }

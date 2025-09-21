@@ -3,6 +3,7 @@ import { usePlaces } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import Placecard from "./Placecard";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 export default function SearchSection() {
   const [query, setQuery] = useState("");
@@ -47,10 +48,22 @@ export default function SearchSection() {
       <Helmet>
         <title>{t("search") || "Поиск"} - Apex Tourism</title>
       </Helmet>
-      <h3 style={{ marginBottom: 16 }}>{t("search") || "Поиск мест"}</h3>
+      <motion.h3 
+        style={{ marginBottom: 16 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      >
+        {t("search") || "Поиск мест"}
+      </motion.h3>
 
       {/* Поле поиска */}
-      <div style={{ marginBottom: 24 }}>
+      <motion.div 
+        style={{ marginBottom: 24 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+      >
         <input
           type="text"
           value={query}
@@ -68,11 +81,15 @@ export default function SearchSection() {
             fontSize: "16px",
           }}
         />
-      </div>
+      </motion.div>
 
       {/* Результаты поиска */}
       {query && (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+        >
           <h3 style={{ margin: "16px 0" }}>
             {t("searchResults") || "Результаты поиска"} ({filteredPlaces.length}
             )
@@ -91,7 +108,7 @@ export default function SearchSection() {
               {t("noSearchResults") || "Ничего не найдено по вашему запросу"}
             </p>
           )}
-        </div>
+        </motion.div>
       )}
     </section>
   );

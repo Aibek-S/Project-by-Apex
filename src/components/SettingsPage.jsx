@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 export default function SettingsPage() {
   const { language, changeLanguage, t } = useLanguage();
@@ -77,16 +78,32 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="settings-container">
+    <motion.div 
+      className="settings-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
       <Helmet>
         <title>{t("settings") || "Настройки"} - Apex Tourism</title>
       </Helmet>
-      <div className="settings-form">
+      <motion.div 
+        className="settings-form"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+      >
         <div className="settings-header">
           <h2>⚙️ {t("settings")}</h2>
-          <button className="icon-btn" onClick={() => navigate(-1)}>
+          <motion.button 
+            className="icon-btn" 
+            onClick={() => navigate(-1)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+          >
             {t("back") || "Назад"}
-          </button>
+          </motion.button>
         </div>
         
         <div className="settings-content">
@@ -141,11 +158,17 @@ export default function SettingsPage() {
         </div>
         
         <div className="settings-footer">
-          <button className="btn" onClick={saveSettings}>
+          <motion.button 
+            className="btn" 
+            onClick={saveSettings}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+          >
              {t("save")}
-          </button>
+          </motion.button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

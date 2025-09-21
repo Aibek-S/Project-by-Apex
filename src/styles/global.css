@@ -182,6 +182,8 @@ body {
     background: var(--bg);
     color: var(--text);
     font-size: var(--base-font-size);
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .app-shell {
@@ -350,6 +352,7 @@ a:active {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: none;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card img {
@@ -375,6 +378,12 @@ a:active {
     border-radius: 10px;
     font-weight: 700;
     border: 1px solid rgba(0, 0, 0, 0.25);
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background: #b8935f;
 }
 
 /* Home slider */
@@ -412,6 +421,7 @@ a:active {
     padding: 10px 12px;
     border-radius: 10px;
     backdrop-filter: blur(4px);
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slider-btn {
@@ -426,6 +436,7 @@ a:active {
     background: var(--card);
     color: var(--text);
     cursor: pointer;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slider-btn.left {
@@ -433,6 +444,12 @@ a:active {
 }
 .slider-btn.right {
     right: 10px;
+}
+
+.slider-btn:hover {
+    background: var(--primary);
+    color: var(--bg);
+    transform: translateY(-50%) scale(1.1);
 }
 
 /* Light theme overrides */
@@ -455,17 +472,6 @@ a:active {
 .theme-light .slide-caption,
 .theme-light .modal-backdrop {
     backdrop-filter: none;
-}
-
-/* Анимации для слайдера */
-.slider-btn {
-    transition: all 0.2s ease;
-}
-
-.slider-btn:hover {
-    background: var(--primary);
-    color: var(--bg);
-    transform: translateY(-50%) scale(1.1);
 }
 
 /* Стили для поиска */
@@ -544,6 +550,13 @@ a:active {
     padding: 8px 10px;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-btn:hover {
+    background: var(--primary);
+    color: #1a120b;
+    transform: scale(1.05);
 }
 
 /* Removed category-specific historical overrides; global theme is now historical */
@@ -835,11 +848,12 @@ a:active {
     font-weight: 700;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .auth-form button:hover:not(:disabled) {
     background: #b8935f;
+    transform: scale(1.05);
 }
 
 .auth-form button:disabled {
@@ -892,6 +906,7 @@ a:active {
     animation: fadeIn 0.3s ease-out;
     position: relative;
     overflow: hidden;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .profile-card::before {
@@ -956,7 +971,7 @@ a:active {
 
 .signout-button:hover:not(:disabled) {
     background: #d34545;
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -1048,7 +1063,7 @@ a:active {
 
 .profile-avatar-label:hover {
     background: #b8935f;
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .profile-avatar-note {
@@ -1122,7 +1137,7 @@ a:active {
 
 .profile-submit-button:hover:not(:disabled) {
     background: #b8935f;
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
