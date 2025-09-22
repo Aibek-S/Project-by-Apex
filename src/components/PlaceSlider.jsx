@@ -105,7 +105,7 @@ export default function PlaceSlider() {
                 {/* Основное изображение */}
                 <div
                     className="slide"
-                    style={{ position: "relative", height: "500px" }}
+                    style={{ position: "relative", height: "auto", paddingBottom: "100px", maxHeight: "600px" }}
                 >
                     <div key={currentSlide}>
                         {currentPlace.place_photos &&
@@ -214,7 +214,7 @@ export default function PlaceSlider() {
                 {/* Кнопки навигации */}
                 {featuredPlaces.length > 1 && (
                     <>
-                        <AnimatedButton
+                        <button
                             className="slider-btn left"
                             onClick={prevSlide}
                             style={{
@@ -238,9 +238,9 @@ export default function PlaceSlider() {
                             aria-label={t("previous") || "Предыдущее"}
                         >
                             ‹
-                        </AnimatedButton>
+                        </button>
 
-                        <AnimatedButton
+                        <button
                             className="slider-btn right"
                             onClick={nextSlide}
                             style={{
@@ -264,7 +264,7 @@ export default function PlaceSlider() {
                             aria-label={t("next") || "Следующее"}
                         >
                             ›
-                        </AnimatedButton>
+                        </button>
                     </>
                 )}
             </div>
