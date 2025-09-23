@@ -432,10 +432,16 @@ export function useToursByPlace(placeId) {
           )
         `)
         .eq("tour_places.place_id", numericPlaceId);
+      
+      // Additional check to ensure we only return tours that actually have the place
+      // This handles cases where the join might return unexpected results
+      const filteredData = data ? data.filter(tour => 
+        tour.tour_places && tour.tour_places.some(tp => tp.place_id === numericPlaceId)
+      ) : [];
 
       if (error) throw error;
       
-      setTours(data || []);
+      setTours(filteredData || []);
     } catch (err) {
       setError(err.message);
       console.error("Error fetching tours for place:", err);

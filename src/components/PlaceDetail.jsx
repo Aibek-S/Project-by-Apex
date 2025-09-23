@@ -287,7 +287,7 @@ export default function PlaceDetail() {
           }}>
             <p className="muted">{t("errorLoadingTours") || "Error loading tours"}</p>
           </div>
-        ) : tours && tours.length > 0 ? (
+        ) : tours && Array.isArray(tours) && tours.length > 0 ? (
           <div className="grid" style={{ 
             display: 'grid', 
             gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
