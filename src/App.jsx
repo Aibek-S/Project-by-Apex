@@ -19,6 +19,8 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 // Компоненты туров
 import TourListPage from "./pages/TourListPage.jsx";
 import TourDetailPage from "./pages/TourDetailPage.jsx";
+// About page
+import AboutPage from "./pages/AboutPage.jsx";
 import { pageVariants } from "./utils/animations.js";
 
 // Ленивая загрузка страницы карты
@@ -84,7 +86,7 @@ export default function App() {
             {/* Главная */}
             <Route path="/" element={
               <AnimatedPage>
-                <HomePage />
+                <HomePage key="home" />
               </AnimatedPage>
             } />
             {/* Страница категории */}
@@ -109,6 +111,12 @@ export default function App() {
             <Route path="/tour/:id" element={
               <AnimatedPage>
                 <TourDetailPage />
+              </AnimatedPage>
+            } />
+            {/* About page */}
+            <Route path="/about" element={
+              <AnimatedPage>
+                <AboutPage />
               </AnimatedPage>
             } />
             {/* Карта с ленивой загрузкой */}

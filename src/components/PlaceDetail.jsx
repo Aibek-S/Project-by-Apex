@@ -3,7 +3,7 @@ import { usePlace, getImageUrl } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useToursByPlace } from "../hooks/useSupabase";
 import FeedbackSection from "./FeedbackSection";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImageLoader from "./ImageLoader";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
@@ -15,6 +15,24 @@ export default function PlaceDetail() {
   const { tours, loading: toursLoading, error: toursError } = useToursByPlace(id);
   const { t, getLocalizedField } = useLanguage();
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
+
+  // If there's no ID, we shouldn't be on this page, so we can return null or redirect
+  // This prevents the "No data" message from showing during navigation transitions
+  if (!id) {
+    return (
+      <div
+        className="loading-container"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "200px",
+        }}
+      >
+        <p className="muted">{t("loading")}</p>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -238,7 +256,7 @@ export default function PlaceDetail() {
 
           {/* Кнопка "Показать на карте" - только если у места есть координаты */}
           {place.lat && place.lng && (
-            <div style={{ marginTop: 24 }}>
+            <div style={{ marginTop: 16 }}>
               <Link
                 to={`/map?place=${place.id}`}
                 className="btn scale-hover"
@@ -253,6 +271,28 @@ export default function PlaceDetail() {
                 </svg>
                 {t("showOnMap") || "Показать на карте"}
               </Link>
+            </div>
+          )}
+
+          {/* 360° Panoramic View Button */}
+          {place.inmap_url && (
+            <div style={{ marginTop: 16 }}>
+              <a
+                href={place.inmap_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn scale-hover"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5z"/>
+                </svg>
+                {t("view360") || "360° View"}
+              </a>
             </div>
           )}
         </motion.div>

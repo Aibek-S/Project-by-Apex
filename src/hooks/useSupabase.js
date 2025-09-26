@@ -134,8 +134,21 @@ export function usePlace(placeId) {
         .from("places")
         .select(
           `
-          *,
-          categories (  
+          id,
+          name_ru,
+          name_en,
+          name_kz,
+          description_ru,
+          description_en,
+          description_kz,
+          legends_ru,
+          legends_en,
+          legends_kz,
+          lat,
+          lng,
+          category_id,
+          inmap_url,
+          categories (
             id,
             name_ru,
             name_en,
@@ -273,11 +286,16 @@ export function useTours() {
         throw new Error("Supabase client is not properly configured. Check your .env file.");
       }
 
-      // Fetch tours with associated places, ordered by position
+      // Fetch tours with associated places and tour photos, ordered by position
       const { data, error } = await supabase
         .from("tours")
         .select(`
-          *,
+          id,
+          name,
+          company,
+          price,
+          description,
+          instagram_url,
           tour_places (
             position,
             places (
@@ -290,6 +308,12 @@ export function useTours() {
                 url
               )
             )
+          ),
+          tour_photos (
+            id,
+            url,
+            is_logo,
+            position
           )
         `)
         .order("id");
@@ -302,6 +326,12 @@ export function useTours() {
           // Sort tour_places by position
           tour.tour_places.sort((a, b) => (a.position || 0) - (b.position || 0));
         }
+        
+        // Sort tour photos by position
+        if (tour.tour_photos) {
+          tour.tour_photos.sort((a, b) => (a.position || 0) - (b.position || 0));
+        }
+        
         return tour;
       });
       
@@ -343,11 +373,16 @@ export function useTour(tourId) {
         throw new Error("Invalid tour ID");
       }
 
-      // Fetch tour data with associated places, ordered by position
+      // Fetch tour data with associated places and tour photos, ordered by position
       const { data, error } = await supabase
         .from("tours")
         .select(`
-          *,
+          id,
+          name,
+          company,
+          price,
+          description,
+          instagram_url,
           tour_places (
             position,
             places (
@@ -366,6 +401,12 @@ export function useTour(tourId) {
                 url
               )
             )
+          ),
+          tour_photos (
+            id,
+            url,
+            is_logo,
+            position
           )
         `)
         .eq("id", numericTourId)
@@ -376,6 +417,11 @@ export function useTour(tourId) {
       // Sort places by position
       if (data && data.tour_places) {
         data.tour_places.sort((a, b) => (a.position || 0) - (b.position || 0));
+      }
+      
+      // Sort tour photos by position
+      if (data && data.tour_photos) {
+        data.tour_photos.sort((a, b) => (a.position || 0) - (b.position || 0));
       }
       
       setTour(data);

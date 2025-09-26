@@ -3,6 +3,7 @@ import AnimatedButton from "../components/AnimatedButton";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabase";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function ProfilePage() {
     const [loading, setLoading] = useState(false);
@@ -12,6 +13,7 @@ export default function ProfilePage() {
     const [error, setError] = useState("");
     const { user, signOut } = useAuth();
     const navigate = useNavigate();
+    const { t } = useLanguage();
 
     // Load user profile from Supabase
     useEffect(() => {
@@ -37,7 +39,7 @@ export default function ProfilePage() {
             }
         } catch (error) {
             console.error("Error loading profile:", error);
-            setError("Ошибка при загрузке профиля");
+            setError(t("errorLoadingProfile"));
         } finally {
             setLoading(false);
         }
@@ -70,7 +72,7 @@ export default function ProfilePage() {
 
             if (error) throw error;
 
-            setMessage("Профиль успешно обновлен");
+            setMessage(t("profileUpdated"));
         } catch (error) {
             setError(error.message);
         } finally {
@@ -88,7 +90,7 @@ export default function ProfilePage() {
                             padding: "20px",
                         }}
                     >
-                        Загрузка...
+                        {t("loading")}
                     </div>
                 </div>
             </div>
@@ -98,7 +100,7 @@ export default function ProfilePage() {
     return (
         <div className="profile-container">
             <div className="profile-card">
-                <h2>Профиль</h2>
+                <h2>{t("profile")}</h2>
                 {error && <div className="error-message">{error}</div>}
                 {message && <div className="success-message">{message}</div>}
                 <div>
@@ -112,7 +114,7 @@ export default function ProfilePage() {
                                     htmlFor="fullName"
                                     className="profile-form-label"
                                 >
-                                    Полное имя
+                                    {t("fullName")}
                                 </label>
                                 <input
                                     id="fullName"
@@ -121,7 +123,7 @@ export default function ProfilePage() {
                                     onChange={(e) =>
                                         setFullName(e.target.value)
                                     }
-                                    placeholder="Введите ваше имя"
+                                    placeholder={t("enterFullName")}
                                     className="profile-form-input"
                                 />
                             </div>
@@ -130,14 +132,14 @@ export default function ProfilePage() {
                                     htmlFor="email"
                                     className="profile-form-label"
                                 >
-                                    Email
+                                    {t("email")}
                                 </label>
                                 <input
                                     id="email"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Введите ваш email"
+                                    placeholder={t("enterEmail")}
                                     className="profile-form-input"
                                     disabled
                                 />
@@ -148,8 +150,8 @@ export default function ProfilePage() {
                                 className="profile-submit-button"
                             >
                                 {loading
-                                    ? "Сохранение..."
-                                    : "Сохранить изменения"}
+                                    ? t("saving")
+                                    : t("saveChanges")}
                             </AnimatedButton>
                         </form>
                     </div>
@@ -159,7 +161,7 @@ export default function ProfilePage() {
                     disabled={loading}
                     className="signout-button"
                 >
-                    {loading ? "Выход..." : "Выйти"}
+                    {loading ? t("signingOut") : t("signOut")}
                 </AnimatedButton>
             </div>
         </div>

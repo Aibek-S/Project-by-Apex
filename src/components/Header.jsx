@@ -106,7 +106,7 @@ export default function Header() {
       <div className="inner">
         {/* Логотип/название — ссылка на главную */}
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <strong>{t("explore")}</strong>
+          <strong>{t("appName")}</strong>
         </Link>
         
         {/* Гамбургер меню для мобильных устройств */}
@@ -124,15 +124,15 @@ export default function Header() {
         
         {/* Навигация для десктопа */}
         <nav className="desktop-nav">
-          <NavLink to="/">{t("home")}</NavLink>
+          
           <NavLink to="/tours">{t("tours") || "Tours"}</NavLink>
           <NavLink to="/map">{t("map") || "Карта"}</NavLink>
           {user ? (
-            <NavLink to="/profile">Профиль</NavLink>
+            <NavLink to="/profile">{t("profile")}</NavLink>
           ) : (
             <>
-              <NavLink to="/login">Вход</NavLink>
-              <NavLink to="/signup">Регистрация</NavLink>
+              <NavLink to="/login">{t("login")}</NavLink>
+              <NavLink to="/signup">{t("signup")}</NavLink>
             </>
           )}
           <NavLink to="/settings">{t("settings")}</NavLink>
@@ -153,11 +153,11 @@ export default function Header() {
               <NavLink to="/tours" onClick={() => setMobileMenuOpen(false)}>{t("tours") || "Tours"}</NavLink>
               <NavLink to="/map" onClick={() => setMobileMenuOpen(false)}>{t("map") || "Карта"}</NavLink>
               {user ? (
-                <NavLink to="/profile" onClick={() => setMobileMenuOpen(false)}>Профиль</NavLink>
+                <NavLink to="/profile" onClick={() => setMobileMenuOpen(false)}>{t("profile")}</NavLink>
               ) : (
                 <>
-                  <NavLink to="/login" onClick={() => setMobileMenuOpen(false)}>Вход</NavLink>
-                  <NavLink to="/signup" onClick={() => setMobileMenuOpen(false)}>Регистрация</NavLink>
+                  <NavLink to="/login" onClick={() => setMobileMenuOpen(false)}>{t("login")}</NavLink>
+                  <NavLink to="/signup" onClick={() => setMobileMenuOpen(false)}>{t("signup")}</NavLink>
                 </>
               )}
               <NavLink to="/settings" onClick={() => setMobileMenuOpen(false)}>{t("settings")}</NavLink>

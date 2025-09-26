@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import AnimatedButton from "../components/AnimatedButton";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const { signIn } = useAuth(); // Removed signInWithGoogle from destructuring
     const navigate = useNavigate();
+    const { t } = useLanguage();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,9 +29,7 @@ export default function LoginPage() {
         } catch (err) {
             // Check if it's an email confirmation error
             if (err.message.includes("Email not confirmed")) {
-                setMessage(
-                    "Пожалуйста, проверьте вашу почту и подтвердите адрес электронной почты."
-                );
+                setMessage(t("checkEmail"));
             } else {
                 setError(err.message);
             }
@@ -48,7 +48,7 @@ export default function LoginPage() {
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
         >
             <Helmet>
-                <title>Вход - Apex Tourism</title>
+                <title>{t("login")} - Apex Tourism</title>
             </Helmet>
             <motion.div
                 className="auth-form"
@@ -60,29 +60,31 @@ export default function LoginPage() {
                     ease: [0.4, 0, 0.2, 1],
                 }}
             >
-                <h2>Вход</h2>
+                <h2>{t("login")}</h2>
                 {error && <div className="error-message">{error}</div>}
                 {message && <div className="success-message">{message}</div>}
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">{t("email")}</label>
                         <input
                             id="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            placeholder={t("enterEmail")}
                             required
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="password">Пароль</label>
+                        <label htmlFor="password">{t("password")}</label>
                         <input
                             id="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            placeholder={t("enterPassword")}
                             required
                         />
                     </div>
@@ -94,7 +96,7 @@ export default function LoginPage() {
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                     >
-                        {loading ? "Вход..." : "Войти"}
+                        {loading ? `${t("signIn")}...` : t("signIn")}
                     </AnimatedButton>
                 </form>
 
@@ -102,8 +104,8 @@ export default function LoginPage() {
 
                 <div className="auth-links">
                     <p>
-                        Нет аккаунта?{" "}
-                        <Link to="/signup">Зарегистрироваться</Link>
+                        {t("noAccount")}{" "}
+                        <Link to="/signup">{t("register")}</Link>
                     </p>
                 </div>
             </motion.div>

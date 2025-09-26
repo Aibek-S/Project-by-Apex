@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCategories } from "../hooks/useSupabase";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -5,8 +6,20 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 
 export default function CategoryList() {
-  const { categories, loading, error } = useCategories();
+  const { categories, loading, error, refetch } = useCategories();
   const { t, getLocalizedField } = useLanguage();
+
+  // Listen for refresh event
+  useEffect(() => {
+    const handleRefresh = () => {
+      refetch();
+    };
+
+    window.addEventListener('refreshHomePage', handleRefresh);
+    return () => {
+      window.removeEventListener('refreshHomePage', handleRefresh);
+    };
+  }, [refetch]);
 
   if (loading) {
     return (
@@ -42,7 +55,8 @@ export default function CategoryList() {
     );
   }
 
-  if (!categories.length) {
+  // Handle case where categories is null or undefined
+  if (!categories || !Array.isArray(categories) || categories.length === 0) {
     return (
       <div
         className="no-data-container"

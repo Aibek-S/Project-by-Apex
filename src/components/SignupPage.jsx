@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import AnimatedButton from "../components/AnimatedButton";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function SignupPage() {
     const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function SignupPage() {
     const [message, setMessage] = useState("");
     const { signUp } = useAuth();
     const navigate = useNavigate();
+    const { t } = useLanguage();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,13 +24,13 @@ export default function SignupPage() {
         setMessage("");
 
         if (!email || !password || !fullName) {
-            setError("Пожалуйста, заполните все поля");
+            setError(t("fillAllFields"));
             setLoading(false);
             return;
         }
 
         if (password.length < 6) {
-            setError("Пароль должен содержать минимум 6 символов");
+            setError(t("passwordMinLength"));
             setLoading(false);
             return;
         }
@@ -40,9 +42,7 @@ export default function SignupPage() {
 
             if (error) throw error;
 
-            setMessage(
-                "Регистрация успешна! Проверьте ваш email для подтверждения."
-            );
+            setMessage(t("signupSuccess"));
             setEmail("");
             setPassword("");
             setFullName("");
@@ -61,7 +61,7 @@ export default function SignupPage() {
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
         >
             <Helmet>
-                <title>Регистрация - Apex Tourism</title>
+                <title>{t("signup")} - Apex Tourism</title>
             </Helmet>
             <motion.div
                 className="auth-form"
@@ -73,42 +73,42 @@ export default function SignupPage() {
                     ease: [0.4, 0, 0.2, 1],
                 }}
             >
-                <h2>Регистрация</h2>
+                <h2>{t("signup")}</h2>
 
                 {error && <div className="error-message">{error}</div>}
                 {message && <div className="success-message">{message}</div>}
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="fullName">Полное имя</label>
+                        <label htmlFor="fullName">{t("fullName")}</label>
                         <input
                             id="fullName"
                             type="text"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
-                            placeholder="Введите ваше имя"
+                            placeholder={t("enterFullName")}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">{t("email")}</label>
                         <input
                             id="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Введите ваш email"
+                            placeholder={t("enterEmail")}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="password">Пароль</label>
+                        <label htmlFor="password">{t("password")}</label>
                         <input
                             id="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Введите пароль"
+                            placeholder={t("enterPassword")}
                         />
                     </div>
 
@@ -120,13 +120,13 @@ export default function SignupPage() {
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                     >
-                        {loading ? "Регистрация..." : "Зарегистрироваться"}
+                        {loading ? `${t("signUp")}...` : t("signUp")}
                     </AnimatedButton>
                 </form>
 
                 <div className="auth-links">
                     <p>
-                        Уже есть аккаунт? <Link to="/login">Войти</Link>
+                        {t("haveAccount")} <Link to="/login">{t("loginAction")}</Link>
                     </p>
                 </div>
             </motion.div>
