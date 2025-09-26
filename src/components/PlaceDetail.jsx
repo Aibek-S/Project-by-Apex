@@ -274,7 +274,7 @@ export default function PlaceDetail() {
             </div>
           )}
 
-          {/* 360° Panoramic View Button */}
+          {/* 360° Panoramic View Button - only show if inmap_url exists */}
           {place.inmap_url && (
             <div style={{ marginTop: 16 }}>
               <a

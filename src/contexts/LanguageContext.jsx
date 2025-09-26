@@ -97,7 +97,9 @@ const translations = {
     // Instagram translation
     visitInstagram: "Посетить Instagram",
     // 360° view translation
-    view360: "360° Просмотр"
+    view360: "360° Просмотр",
+    // 360° view not available yet translation
+    view360NotAvailable: "Пока что нету такого"
   },
   en: {
     home: "Home",
@@ -192,7 +194,9 @@ const translations = {
     // Instagram translation
     visitInstagram: "Visit Instagram",
     // 360° view translation
-    view360: "360° View"
+    view360: "360° View",
+    // 360° view not available yet translation
+    view360NotAvailable: "Not available yet"
   },
   kz: {
     home: "Басты бет",
