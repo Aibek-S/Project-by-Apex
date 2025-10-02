@@ -1,3 +1,49 @@
+@import url('./chat.css');
+
+/* Chat Example Styles */
+.chat-example-container {
+  padding: 24px 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.chat-example-title {
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 24px;
+  font-size: 2rem;
+}
+
+.chat-example-content {
+  max-width: 700px;
+  margin: 0 auto 32px;
+}
+
+.chat-example-info {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chat-example-info h2 {
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.chat-example-list {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.chat-example-list li {
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
 /* SETTINGS PAGE STYLES */
 .settings-container {
     min-height: 70vh;

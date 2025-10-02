@@ -5,7 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Header() {
+export default function Header({ onChatToggle }) {
   // Языковой контекст
   const { language, changeLanguage, t } = useLanguage();
   const { user } = useAuth();
@@ -124,7 +124,6 @@ export default function Header() {
         
         {/* Навигация для десктопа */}
         <nav className="desktop-nav">
-          
           <NavLink to="/tours">{t("tours") || "Tours"}</NavLink>
           <NavLink to="/map">{t("map") || "Карта"}</NavLink>
           {user ? (
@@ -136,6 +135,7 @@ export default function Header() {
             </>
           )}
           <NavLink to="/settings">{t("settings")}</NavLink>
+          <NavLink to="/chat">{t("aiAssistant")}</NavLink>
         </nav>
         
         {/* Мобильное меню */}
@@ -161,6 +161,7 @@ export default function Header() {
                 </>
               )}
               <NavLink to="/settings" onClick={() => setMobileMenuOpen(false)}>{t("settings")}</NavLink>
+              <NavLink to="/chat" onClick={() => setMobileMenuOpen(false)}>{t("aiAssistant")}</NavLink>
             </motion.nav>
           )}
         </AnimatePresence>

@@ -99,7 +99,16 @@ const translations = {
     // 360° view translation
     view360: "360° Просмотр",
     // 360° view not available yet translation
-    view360NotAvailable: "Пока что нету такого"
+    view360NotAvailable: "Пока что нету такого",
+    // Chat translations
+    aiAssistant: "ИИ Помощник",
+    queuePending: "Очередь:",
+    closeChat: "Закрыть чат",
+    typeMessage: "Введите ваше сообщение...",
+    sendMessage: "Отправить сообщение",
+    send: "Отправить",
+    chatError: "Извините, произошла ошибка. Пожалуйста, попробуйте еще раз.",
+    chatWelcomeMessage: "Напишите ваш вопрос, и я постараюсь помочь!"
   },
   en: {
     home: "Home",
@@ -196,7 +205,16 @@ const translations = {
     // 360° view translation
     view360: "360° View",
     // 360° view not available yet translation
-    view360NotAvailable: "Not available yet"
+    view360NotAvailable: "Not available yet",
+    // Chat translations
+    aiAssistant: "AI Assistant",
+    queuePending: "Queue:",
+    closeChat: "Close chat",
+    typeMessage: "Type your message...",
+    sendMessage: "Send message",
+    send: "Send",
+    chatError: "Sorry, I encountered an error. Please try again.",
+    chatWelcomeMessage: "Write your question and I'll do my best to help!"
   },
   kz: {
     home: "Басты бет",
@@ -291,7 +309,16 @@ const translations = {
     // Instagram translation
     visitInstagram: "Instagram-ды қарастыру",
     // 360° view translation
-    view360: "360° Көрініс"
+    view360: "360° Көрініс",
+    // Chat translations
+    aiAssistant: "ЖИ Көмекші",
+    queuePending: "Кезек:",
+    closeChat: "Чатты жабу",
+    typeMessage: "Хабарламаңызды теріңіз...",
+    sendMessage: "Хабарлама жіберу",
+    send: "Жіберу",
+    chatError: "Кешіріңіз, қате орын алды. Қайтадан көріңіз.",
+    chatWelcomeMessage: "Сұрағыңызды жазыңыз, мен көмектесуге тырысамын!"
   },
 };
 

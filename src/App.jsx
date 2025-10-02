@@ -1,6 +1,6 @@
 // Импортируем маршрутизатор и компоненты
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 // Общие компоненты шапки/подвала
@@ -23,8 +23,59 @@ import TourDetailPage from "./pages/TourDetailPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import { pageVariants } from "./utils/animations.js";
 
-// Ленивая загрузка страницы карты
+// Ленивая загрузка страницы карты и чат-бота
 const MapPage = lazy(() => import("./pages/MapPage.jsx"));
+const ChatBot = lazy(() => import("./components/ChatBot.jsx"));
+
+// ChatBot Modal Component
+const ChatBotModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1000,
+      }}
+      onClick={onClose}
+    >
+      <div 
+        style={{
+          backgroundColor: 'var(--card)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          maxWidth: '500px',
+          width: '100%',
+          maxHeight: '80vh',
+          overflow: 'hidden',
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Suspense fallback={
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '300px',
+            fontSize: '18px'
+          }}>
+            Loading chat...
+          </div>
+        }>
+          <ChatBot showHeader={true} onClose={onClose} />
+        </Suspense>
+      </div>
+    </div>
+  );
+};
 
 // Animated page wrapper component
 const AnimatedPage = ({ children }) => {
@@ -48,10 +99,12 @@ const AnimatedPage = ({ children }) => {
 
 // Корневой компонент приложения: шапка, маршрутизация, подвал
 export default function App() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <HelmetProvider>
       <div className="app-shell">
-        <Header />
+        <Header onChatToggle={() => setIsChatOpen(true)} />
         <main className="app-main">
           <Routes>
             {/* Аутентификация */}
@@ -119,6 +172,27 @@ export default function App() {
                 <AboutPage />
               </AnimatedPage>
             } />
+            {/* Chat page */}
+            <Route 
+              path="/chat" 
+              element={
+                <AnimatedPage>
+                  <Suspense fallback={
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '100vh',
+                      fontSize: '18px'
+                    }}>
+                      Loading chat...
+                    </div>
+                  }>
+                    <ChatBot showHeader={true} />
+                  </Suspense>
+                </AnimatedPage>
+              } 
+            />
             {/* Карта с ленивой загрузкой */}
             <Route 
               path="/map" 
@@ -145,6 +219,7 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
+        <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       </div>
     </HelmetProvider>
   );
