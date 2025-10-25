@@ -15,11 +15,22 @@ export default function PlaceSlider() {
     const { t, getLocalizedField } = useLanguage();
     const [currentSlide, setCurrentSlide] = useState(0);
     const [featuredPlaces, setFeaturedPlaces] = useState([]);
+    
+    // Список ID интересных мест
+    const interestingPlaceIds = [2,4,5,10,19];
 
-    // Выбираем случайные места для показа в слайдере
+    // Выбираем случайные места для показа в слайдере только из интересных мест
     useEffect(() => {
         if (places.length > 0) {
-            const shuffled = [...places].sort(() => Math.random() - 0.5);
+            // Фильтруем места, оставляя только интересные
+            const interestingPlaces = places.filter(place => 
+                interestingPlaceIds.includes(place.id)
+            );
+            
+            // Перемешиваем интересные места
+            const shuffled = [...interestingPlaces].sort(() => Math.random() - 0.5);
+            
+            // Берем до 6 мест из перемешанного списка
             setFeaturedPlaces(shuffled.slice(0, Math.min(6, shuffled.length)));
             setCurrentSlide(0);
         }

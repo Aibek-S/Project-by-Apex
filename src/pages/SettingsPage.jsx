@@ -43,7 +43,7 @@ export default function SettingsPage() {
         localStorage.setItem("app_font_size", fontSize);
         applyTheme(theme);
         applyFontSize(fontSize);
-        alert(t("settingsSaved") || "Настройки сохранены");
+        alert(t("settingsSaved"));
         navigate(-1); // Go back to previous page
     };
 
@@ -55,25 +55,25 @@ export default function SettingsPage() {
     // Get language name for display
     const getLanguageName = (langCode) => {
         const languages = {
-            ru: "Русский",
-            en: "English",
-            kz: "Қазақша",
+            ru: t("languageRussian"),
+            en: t("languageEnglish"),
+            kz: t("languageKazakh"),
         };
         return languages[langCode] || langCode;
     };
 
     // Get theme name for display
     const getThemeName = (themeValue) => {
-        return themeValue === "light" ? "Светлая" : "Тёмная";
+        return themeValue === "light" ? t("themeLight") : t("themeDark");
     };
 
     // Get font size description
     const getFontSizeDescription = (size) => {
         const sizes = {
-            14: "Маленький",
-            16: "Обычный",
-            18: "Крупный",
-            20: "Очень крупный",
+            14: t("fontSizeSmall"),
+            16: t("fontSizeNormal"),
+            18: t("fontSizeLarge"),
+            20: t("fontSizeExtraLarge"),
         };
         return sizes[size] || `${size}px`;
     };
@@ -86,7 +86,7 @@ export default function SettingsPage() {
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
         >
             <Helmet>
-                <title>{t("settings") || "Настройки"} - Apex Tourism</title>
+                <title>{t("settings")} - Apex Tourism</title>
             </Helmet>
             <motion.div
                 className="settings-form"
@@ -107,14 +107,14 @@ export default function SettingsPage() {
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                     >
-                        {t("back") || "Назад"}
+                        {t("back")}
                     </AnimatedButton>
                 </div>
 
                 <div className="settings-content">
                     <div className="settings-section">
                         <div className="settings-card">
-                            <h3>Основные настройки</h3>
+                            <h3>{t("basicSettings")}</h3>
                             <div className="settings-row">
                                 <div className="form-group">
                                     <label htmlFor="language">
@@ -128,9 +128,15 @@ export default function SettingsPage() {
                                         }
                                         className="settings-select"
                                     >
-                                        <option value="ru">Русский</option>
-                                        <option value="en">English</option>
-                                        <option value="kz">Қазақша</option>
+                                        <option value="ru">
+                                            {t("languageRussian")}
+                                        </option>
+                                        <option value="en">
+                                            {t("languageEnglish")}
+                                        </option>
+                                        <option value="kz">
+                                            {t("languageKazakh")}
+                                        </option>
                                     </select>
                                 </div>
 
@@ -145,9 +151,11 @@ export default function SettingsPage() {
                                         className="settings-select"
                                     >
                                         <option value="dark">
-                                            Тёмная (историческая)
+                                            {t("themeDark")}
                                         </option>
-                                        <option value="light">Светлая</option>
+                                        <option value="light">
+                                            {t("themeLight")}
+                                        </option>
                                     </select>
                                 </div>
 
@@ -163,11 +171,17 @@ export default function SettingsPage() {
                                         }
                                         className="settings-select"
                                     >
-                                        <option value="14">Маленький</option>
-                                        <option value="16">Обычный</option>
-                                        <option value="18">Крупный</option>
+                                        <option value="14">
+                                            {t("fontSizeSmall")}
+                                        </option>
+                                        <option value="16">
+                                            {t("fontSizeNormal")}
+                                        </option>
+                                        <option value="18">
+                                            {t("fontSizeLarge")}
+                                        </option>
                                         <option value="20">
-                                            Очень крупный
+                                            {t("fontSizeExtraLarge")}
                                         </option>
                                     </select>
                                 </div>
@@ -188,6 +202,116 @@ export default function SettingsPage() {
                     </AnimatedButton>
                 </div>
             </motion.div>
+
+            {/* Mobile Responsive Styles */}
+            <style>{`
+                @media (max-width: 768px) {
+                    .settings-container {
+                        padding: 20px 12px !important;
+                        min-height: 60vh !important;
+                    }
+                    
+                    .settings-form {
+                        padding: 24px 20px 20px 20px !important;
+                        gap: 16px !important;
+                    }
+                    
+                    .settings-header {
+                        margin-bottom: 12px !important;
+                    }
+                    
+                    .settings-header h2 {
+                        font-size: 1.3rem !important;
+                    }
+                    
+                    .settings-content {
+                        gap: 12px !important;
+                    }
+                    
+                    .settings-card {
+                        padding: 16px !important;
+                    }
+                    
+                    .settings-card h3 {
+                        font-size: 1.1rem !important;
+                        margin-bottom: 12px !important;
+                    }
+                    
+                    .settings-row {
+                        gap: 12px !important;
+                    }
+                    
+                    .form-group {
+                        margin-bottom: 0 !important;
+                    }
+                    
+                    .form-group label {
+                        font-size: 0.95rem !important;
+                        margin-bottom: 6px !important;
+                    }
+                    
+                    .settings-select {
+                        padding: 8px 10px !important;
+                        font-size: 0.95rem !important;
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    .settings-container {
+                        padding: 16px 8px !important;
+                        min-height: auto !important;
+                    }
+                    
+                    .settings-form {
+                        padding: 20px 16px 16px 16px !important;
+                        gap: 12px !important;
+                        border-radius: 12px !important;
+                    }
+                    
+                    .settings-header {
+                        margin-bottom: 8px !important;
+                        flex-direction: row !important;
+                    }
+                    
+                    .settings-header h2 {
+                        font-size: 1.2rem !important;
+                    }
+                    
+                    .settings-header .icon-btn {
+                        padding: 6px 12px !important;
+                        font-size: 0.9rem !important;
+                    }
+                    
+                    .settings-card {
+                        padding: 12px !important;
+                    }
+                    
+                    .settings-card h3 {
+                        font-size: 1rem !important;
+                        margin-bottom: 10px !important;
+                    }
+                    
+                    .settings-row {
+                        gap: 10px !important;
+                    }
+                    
+                    .form-group label {
+                        font-size: 0.9rem !important;
+                        margin-bottom: 4px !important;
+                    }
+                    
+                    .settings-select {
+                        padding: 7px 8px !important;
+                        font-size: 0.9rem !important;
+                    }
+                    
+                    .settings-footer .btn {
+                        width: 100% !important;
+                        padding: 10px 16px !important;
+                        font-size: 0.95rem !important;
+                    }
+                }
+            `}</style>
         </motion.div>
     );
 }

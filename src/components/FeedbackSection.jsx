@@ -2,9 +2,11 @@ import { useState } from "react";
 import AnimatedButton from "../components/AnimatedButton";
 import { useAuth } from "../contexts/AuthContext";
 import { useFeedback } from "../hooks/useFeedback";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function FeedbackSection({ placeId }) {
     const { user } = useAuth();
+    const { t, language } = useLanguage();
     const {
         feedback,
         loading,
@@ -23,14 +25,12 @@ export default function FeedbackSection({ placeId }) {
         e.preventDefault();
 
         if (!user) {
-            setFeedbackError(
-                "Пожалуйста, войдите в систему, чтобы оставить отзыв"
-            );
+            setFeedbackError(t("pleaseLoginToReview"));
             return;
         }
 
         if (rating === 0) {
-            setFeedbackError("Пожалуйста, поставьте оценку");
+            setFeedbackError(t("pleaseRate"));
             return;
         }
 
@@ -48,7 +48,7 @@ export default function FeedbackSection({ placeId }) {
             setRating(0);
             setComment("");
         } catch (err) {
-            setFeedbackError("Ошибка при отправке отзыва: " + err.message);
+            setFeedbackError(t("reviewError") + " " + err.message);
         } finally {
             setSubmitting(false);
         }
@@ -107,7 +107,7 @@ export default function FeedbackSection({ placeId }) {
 
     return (
         <div className="feedback-section">
-            <h3>Отзывы посетителей</h3>
+            <h3>{t("visitorReviews")}</h3>
 
             {/* Average Rating Display */}
             <div className="average-rating">
@@ -117,7 +117,7 @@ export default function FeedbackSection({ placeId }) {
                         {renderStaticStars(Math.round(averageRating), "large")}
                     </div>
                     <span className="rating-count">
-                        ({feedback.length} отзывов)
+                        ({feedback.length} {t("reviews")})
                     </span>
                 </div>
             </div>
@@ -148,26 +148,26 @@ export default function FeedbackSection({ placeId }) {
             {/* Feedback Form */}
             {user ? (
                 <div className="feedback-form-container">
-                    <h4>Оставить отзыв</h4>
+                    <h4>{t("leaveReview")}</h4>
                     <form onSubmit={handleSubmit} className="feedback-form">
                         {feedbackError && (
                             <div className="error-message">{feedbackError}</div>
                         )}
 
                         <div className="form-group">
-                            <label>Ваша оценка:</label>
+                            <label>{t("yourRating")}</label>
                             <div className="star-rating">
                                 {renderStars(rating)}
                             </div>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="comment">Ваш комментарий:</label>
+                            <label htmlFor="comment">{t("yourComment")}</label>
                             <textarea
                                 id="comment"
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
-                                placeholder="Поделитесь своими впечатлениями..."
+                                placeholder={t("shareExperience")}
                                 rows="4"
                             />
                         </div>
@@ -177,34 +177,32 @@ export default function FeedbackSection({ placeId }) {
                             disabled={submitting}
                             className="btn"
                         >
-                            {submitting ? "Отправка..." : "Отправить отзыв"}
+                            {submitting ? t("submitting") : t("submitReview")}
                         </AnimatedButton>
                     </form>
                 </div>
             ) : (
                 <div className="login-prompt">
                     <p>
-                        Пожалуйста, <a href="/login">войдите</a> или{" "}
-                        <a href="/signup">зарегистрируйтесь</a>, чтобы оставить
-                        отзыв.
+                        {t("pleaseLoginOrSignup")}{" "}
+                        <a href="/login">{t("login")}</a>{" "}
+                        <a href="/signup">{t("signup")}</a>.
                     </p>
                 </div>
             )}
 
             {/* Feedback List */}
             <div className="feedback-list">
-                <h4>Отзывы посетителей</h4>
+                <h4>{t("visitorReviews")}</h4>
 
                 {loading ? (
-                    <div className="loading">Загрузка отзывов...</div>
+                    <div className="loading">{t("loadingReviews")}</div>
                 ) : error ? (
                     <div className="error-message">
-                        Ошибка загрузки отзывов: {error}
+                        {t("errorLoadingReviews")} {error}
                     </div>
                 ) : feedback.length === 0 ? (
-                    <p className="no-feedback">
-                        Пока нет отзывов. Будьте первым!
-                    </p>
+                    <p className="no-feedback">{t("noReviewsYet")}</p>
                 ) : (
                     <div className="feedback-items">
                         {feedback.map((item) => (
@@ -219,7 +217,7 @@ export default function FeedbackSection({ placeId }) {
                                         <div className="user-details">
                                             <span className="user-name">
                                                 {item.users?.full_name ||
-                                                    "Анонимный пользователь"}
+                                                    t("anonymousUser")}
                                             </span>
                                             <div className="rating">
                                                 {renderStaticStars(item.rating)}
@@ -229,7 +227,13 @@ export default function FeedbackSection({ placeId }) {
                                     <div className="date">
                                         {new Date(
                                             item.created_at
-                                        ).toLocaleDateString("ru-RU")}
+                                        ).toLocaleDateString(
+                                            language === "ru"
+                                                ? "ru-RU"
+                                                : language === "en"
+                                                  ? "en-US"
+                                                  : "kk-KZ"
+                                        )}
                                     </div>
                                 </div>
                                 {item.comment && (
