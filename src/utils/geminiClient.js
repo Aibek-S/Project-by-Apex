@@ -5,7 +5,8 @@ import { dataService } from "../services/dataService.js";
 // Utility functions for interacting with the Gemini API proxy server
 
 const SERVER_URL =
-    import.meta.env.VITE_GEMINI_SERVER_URL || "http://localhost:3001";
+    import.meta.env.VITE_GEMINI_SERVER_URL ||
+    (import.meta.env.MODE === "production" ? "" : "http://localhost:3001");
 
 // AI assistant context for tourism guide
 const AI_CONTEXT = `Ты — чат-бот-туроводитель для Мангистауской области.
