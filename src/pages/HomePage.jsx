@@ -64,7 +64,7 @@ export default function HomePage() {
                 <CategoryList />
             </motion.div>
 
-            {/* История Мангистау секция */}
+            {/* Две большие секции-карточки */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -75,58 +75,192 @@ export default function HomePage() {
                 }}
                 style={{
                     marginTop: "40px",
-                    padding: "32px",
-                    background: "var(--card)",
-                    borderRadius: "16px",
-                    border: "1px solid var(--border)",
-                    textAlign: "center",
-                    position: "relative",
-                    overflow: "hidden",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                    gap: "24px",
                 }}
             >
-                <div
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        height: "3px",
-                        background:
-                            "linear-gradient(90deg, transparent, var(--primary), transparent)",
-                    }}
-                />
-
-                <h2
-                    style={{
-                        fontSize: "1.8rem",
-                        marginBottom: 16,
-                        color: "var(--primary)",
-                    }}
-                >
-                    {t("historyOfMangystau")}
-                </h2>
-
-                <p
-                    style={{
-                        fontSize: "1.1rem",
-                        color: "var(--muted)",
-                        marginBottom: 24,
-                        lineHeight: 1.6,
-                    }}
-                >
-                    {t("historyCallToAction")}
-                </p>
-
+                {/* Карточка Музыка */}
                 <Link
-                    to="/history"
-                    className="btn"
+                    to="/music"
                     style={{
-                        fontSize: "1.1rem",
-                        padding: "12px 32px",
-                        display: "inline-block",
+                        textDecoration: "none",
+                        color: "inherit",
+                        display: "block",
                     }}
                 >
-                    {t("exploreHistory")} →
+                    <div
+                        style={{
+                            padding: "48px 32px",
+                            background:
+                                "linear-gradient(135deg, var(--card) 0%, rgba(212, 165, 116, 0.05) 100%)",
+                            borderRadius: "20px",
+                            border: "1px solid var(--border)",
+                            textAlign: "center",
+                            position: "relative",
+                            overflow: "hidden",
+                            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                            transition: "all 0.3s ease",
+                            cursor: "pointer",
+                            height: "100%",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform =
+                                "translateY(-4px)";
+                            e.currentTarget.style.boxShadow =
+                                "0 8px 30px rgba(212, 165, 116, 0.3)";
+                            e.currentTarget.style.borderColor =
+                                "var(--primary)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = "translateY(0)";
+                            e.currentTarget.style.boxShadow =
+                                "0 4px 20px rgba(0, 0, 0, 0.1)";
+                            e.currentTarget.style.borderColor = "var(--border)";
+                        }}
+                    >
+                        {/* Декоративная линия сверху */}
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                height: "4px",
+                                background:
+                                    "linear-gradient(90deg, transparent, var(--primary), transparent)",
+                            }}
+                        />
+
+                        <h2
+                            style={{
+                                fontSize: "2rem",
+                                marginBottom: 16,
+                                color: "var(--primary)",
+                                fontWeight: 700,
+                                letterSpacing: "-0.5px",
+                            }}
+                        >
+                            {t("musicHeroTitle") || "Музыка Мангистау"}
+                        </h2>
+
+                        <p
+                            style={{
+                                fontSize: "1.1rem",
+                                color: "var(--text)",
+                                lineHeight: 1.7,
+                                opacity: 0.85,
+                                marginBottom: 24,
+                            }}
+                        >
+                            {t("musicHeroDescription") ||
+                                "Послушайте традиционные кюй и мелодии региона"}
+                        </p>
+
+                        <div
+                            style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                fontSize: "1rem",
+                                color: "var(--primary)",
+                                fontWeight: 600,
+                            }}
+                        >
+                            {t("exploreMusic") || "Слушать музыку"}
+                        </div>
+                    </div>
+                </Link>
+
+                {/* Карточка Статьи */}
+                <Link
+                    to="/articles"
+                    style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                        display: "block",
+                    }}
+                >
+                    <div
+                        style={{
+                            padding: "48px 32px",
+                            background:
+                                "linear-gradient(135deg, var(--card) 0%, rgba(212, 165, 116, 0.05) 100%)",
+                            borderRadius: "20px",
+                            border: "1px solid var(--border)",
+                            textAlign: "center",
+                            position: "relative",
+                            overflow: "hidden",
+                            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                            transition: "all 0.3s ease",
+                            cursor: "pointer",
+                            height: "100%",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform =
+                                "translateY(-4px)";
+                            e.currentTarget.style.boxShadow =
+                                "0 8px 30px rgba(212, 165, 116, 0.3)";
+                            e.currentTarget.style.borderColor =
+                                "var(--primary)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = "translateY(0)";
+                            e.currentTarget.style.boxShadow =
+                                "0 4px 20px rgba(0, 0, 0, 0.1)";
+                            e.currentTarget.style.borderColor = "var(--border)";
+                        }}
+                    >
+                        {/* Декоративная линия сверху */}
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                height: "4px",
+                                background:
+                                    "linear-gradient(90deg, transparent, var(--primary), transparent)",
+                            }}
+                        />
+
+                        <h2
+                            style={{
+                                fontSize: "2rem",
+                                marginBottom: 16,
+                                color: "var(--primary)",
+                                fontWeight: 700,
+                                letterSpacing: "-0.5px",
+                            }}
+                        >
+                            {t("articlesHeroTitle")}
+                        </h2>
+
+                        <p
+                            style={{
+                                fontSize: "1.1rem",
+                                color: "var(--text)",
+                                lineHeight: 1.7,
+                                opacity: 0.85,
+                                marginBottom: 24,
+                            }}
+                        >
+                            {t("articlesHeroDescription")}
+                        </p>
+
+                        <div
+                            style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                fontSize: "1rem",
+                                color: "var(--primary)",
+                                fontWeight: 600,
+                            }}
+                        >
+                            {t("exploreArticles")}
+                        </div>
+                    </div>
                 </Link>
             </motion.div>
         </motion.div>

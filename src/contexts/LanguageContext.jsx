@@ -175,61 +175,37 @@ const translations = {
             "Пожалуйста, войдите или зарегистрируйтесь, чтобы оставить отзыв.",
         loginLink: "Войдите",
         signupLink: "Зарегистрируйтесь",
-        // History page translations
-        historyOfMangystau: "История Мангистау",
-        historyCallToAction:
-            "Узнайте о богатой истории и культурном наследии Мангистау, от древних времён до современности",
-        exploreHistory: "Узнать историю",
-        historicalTimeline: "Историческая хронология",
-        interestingFacts: "Интересные факты",
-        historicalPlaces: "Исторические места",
-        historyIntro:
-            "Мангистау — регион с богатейшей историей, хранящий следы древних цивилизаций, Великого Шёлкового пути и уникальной культуры казахского народа",
-        // Временная линия
-        history_era1_year: "V-III вв. до н.э.",
-        history_era1_title: "Древние племена",
-        history_era1_desc:
-            "На территории Мангистау проживали сакские и массагетские племена, оставившие после себя древние некрополи и петроглифы",
-        history_era2_year: "VIII-XII вв.",
-        history_era2_title: "Великий Шёлковый путь",
-        history_era2_desc:
-            "Мангистау становится важным транзитным пунктом Великого Шёлкового пути, через который проходили караваны между Востоком и Западом",
-        history_era3_year: "X-XIII вв.",
-        history_era3_title: "Подземные мечети",
-        history_era3_desc:
-            "Строительство уникальных подземных мечетей Бекет-Ата, Шопан-Ата и Шакпак-Ата, ставших центрами суфизма в регионе",
-        history_era4_year: "XVIII-XIX вв.",
-        history_era4_title: "Казахские жузы",
-        history_era4_desc:
-            "Мангистау становится важным центром Младшего жуза, здесь происходят важные события казахской истории и формируется уникальная культура",
-        history_era5_year: "XX век - наши дни",
-        history_era5_title: "Современное развитие",
-        history_era5_desc:
-            "Развитие нефтегазовой промышленности, строительство Актау и превращение региона в важный экономический центр Казахстана",
-        // Интересные факты
-        history_fact1:
-            "Мангистау — единственный регион в мире с таким количеством подземных мечетей, вырубленных в скалах",
-        history_fact2:
-            "Впадина Карагие — самая низкая точка на территории СНГ, расположенная на 132 метра ниже уровня моря",
-        history_fact3:
-            "Название 'Мангистау' происходит от тюркского 'Мың қыстау' — 'тысяча зимовок', что отражает кочевой образ жизни предков",
-        history_fact4:
-            "Каньон Бозжыра — дно древнего океана, где были найдены зубы акул и раковины моллюсков",
-        history_fact5:
-            "Мангистау был домом для многих суфийских шейхов и святых, чьи мавзолеи до сих пор являются местами паломничества",
-        history_fact6:
-            "Миллионы лет назад территория Мангистау была дном океана Тетис, затем океан отступил, и на его месте образовались засушливые степи и живописные каньоны",
-        // Расширенные описания эпох для модального окна
-        history_era1_full:
-            "В этот период на территории современного Мангистау обитали воинственные сакские племена, известные своим искусством верховой езды и изготовления золотых украшений. Массагеты, согласно древним источникам, разгромили армию персидского царя Кира II. Археологические раскопки обнаружили множество курганов с богатыми захоронениями, содержащими оружие, украшения и предметы быта. Петроглифы того периода изображают сцены охоты, ритуальные танцы и астрономические наблюдения.",
-        history_era2_full:
-            "Мангистау занимал стратегическое положение на Великом Шёлковом пути, соединяя Восток и Запад. Через регион проходили караваны с шелком, специями, драгоценными камнями и другими товарами. Вдоль торговых путей возникали караван-сараи, где путники могли отдохнуть и пополнить запасы. Этот период способствовал культурному обмену между различными цивилизациями, распространению новых технологий, религиозных идей и научных знаний.",
-        history_era3_full:
-            "Строительство подземных мечетей стало уникальным явлением в исламской архитектуре. Мечети Бекет-Ата, Шопан-Ата и Шакпак-Ата были высечены в скалах и служили не только местами поклонения, но и убежищами для суфийских учителей и их последователей. Эти святые места привлекали паломников со всей Центральной Азии. Подземные помещения создавали особую акустику и микроклимат, способствующие медитации и духовным практикам.",
-        history_era4_full:
-            "В этот период Мангистау стал важным политическим и культурным центром казахского народа. Здесь формировались родовые традиции, развивалось устное народное творчество, создавались эпические поэмы. Регион был ареной важных исторических событий, включая казахско-джунгарские войны и процесс присоединения к Российской империи. Некрополи этого периода демонстрируют высокое мастерство каменной резьбы и уникальные архитектурные формы.",
-        history_era5_full:
-            "XX век принес радикальные изменения в жизнь региона. Открытие месторождений нефти и газа в 1960-х годах привело к индустриализации Мангистау. Был построен город Актау (первоначально Шевченко) - первый в СССР город, полностью обеспечиваемый опресненной морской водой. Развитие атомной энергетики, создание Мангышлакского атомно-энергетического комбината стало важной вехой. Сегодня Мангистау - динамично развивающийся регион Казахстана с богатой историей и перспективным будущем.",
+        // Articles page translations
+        articles: "Статьи",
+        articlesHeroTitle: "Откройте для себя Мангистауский край",
+        articlesHeroDescription:
+            "Читайте свежие материалы о культуре, природе и людях Мангистау",
+        articlesDescription:
+            "Откройте для себя интересные истории, советы и путеводители по Мангистау",
+        allCategories: "Все категории",
+        noArticles: "Статьи не найдены",
+        articleNotFound: "Статья не найдена",
+        backToArticles: "Вернуться к статьям",
+        minRead: "мин чтения",
+        views: "просмотров",
+        gallery: "Галерея",
+        similarArticles: "Похожие статьи",
+        min: "мин",
+        readMore: "Читать далее",
+        exploreArticles: "Перейти к статьям",
+        articlesCallToAction: "Узнайте больше о Мангистау из наших статей",
+        exploreMusic: "Слушать музыку",
+        musicHeroTitle: "Музыка Мангистау",
+        musicHeroDescription: "Послушайте традиционные кюй и мелодии региона",
+        music: "Музыка",
+        composer: "Композитор",
+        duration: "Длительность",
+        listenNow: "Слушать",
+        noMusic: "Композиций не найдено",
+        showDescription: "Показать описание",
+        hideDescription: "Скрыть описание",
+        download: "Скачать",
+        playbackSpeed: "Скорость воспроизведения",
     },
     en: {
         home: "Home",
@@ -398,61 +374,38 @@ const translations = {
         pleaseLoginOrSignup: "Please Log in or Sign up to Leave a Review.",
         loginLink: "Log In",
         signupLink: "Sign Up",
-        // History page translations
-        historyOfMangystau: "History of Mangystau",
-        historyCallToAction:
-            "Learn about the rich history and cultural heritage of Mangystau, from ancient times to the present",
-        exploreHistory: "Explore History",
-        historicalTimeline: "Historical Timeline",
-        interestingFacts: "Interesting Facts",
-        historicalPlaces: "Historical Places",
-        historyIntro:
-            "Mangystau is a region with a rich history, preserving traces of ancient civilizations, the Great Silk Road and the unique culture of the Kazakh people",
-        // Timeline
-        history_era1_year: "V-III centuries BC",
-        history_era1_title: "Ancient Tribes",
-        history_era1_desc:
-            "Saka and Massagetae tribes lived in Mangystau, leaving behind ancient necropolises and petroglyphs",
-        history_era2_year: "VIII-XII centuries",
-        history_era2_title: "Great Silk Road",
-        history_era2_desc:
-            "Mangystau becomes an important transit point on the Great Silk Road, through which caravans passed between East and West",
-        history_era3_year: "X-XIII centuries",
-        history_era3_title: "Underground Mosques",
-        history_era3_desc:
-            "Construction of unique underground mosques Beket-Ata, Shopan-Ata and Shakpak-Ata, which became centers of Sufism in the region",
-        history_era4_year: "XVIII-XIX centuries",
-        history_era4_title: "Kazakh Zhuzes",
-        history_era4_desc:
-            "Mangystau becomes an important center of the Junior Zhuz, important events of Kazakh history take place here and a unique culture is formed",
-        history_era5_year: "XX century - present",
-        history_era5_title: "Modern Development",
-        history_era5_desc:
-            "Development of the oil and gas industry, construction of Aktau and transformation of the region into an important economic center of Kazakhstan",
-        // Interesting facts
-        history_fact1:
-            "Mangystau is the only region in the world with so many underground mosques carved into the rocks",
-        history_fact2:
-            "The Karagiye Depression is the lowest point in the CIS territory, located 132 meters below sea level",
-        history_fact3:
-            "The name 'Mangystau' comes from the Turkic 'Mıñ qıstaw' - 'a thousand winter camps', which reflects the nomadic lifestyle of ancestors",
-        history_fact4:
-            "The Bozzhyra Canyon is the bottom of an ancient ocean, where shark teeth and mollusk shells have been found",
-        history_fact5:
-            "Mangystau was home to many Sufi sheikhs and saints, whose mausoleums are still places of pilgrimage",
-        history_fact6:
-            "Millions of years ago, the Mangystau territory was the bottom of the Tethys Ocean, then the ocean receded, and in its place arid steppes and picturesque canyons were formed",
-        // Extended era descriptions for modal
-        history_era1_full:
-            "During this period, the territory of modern Mangystau was inhabited by warlike Saka tribes, known for their horsemanship and gold jewelry making. The Massagetae, according to ancient sources, defeated the army of Persian King Cyrus II. Archaeological excavations have discovered many burial mounds with rich burials containing weapons, jewelry and household items. Petroglyphs from that period depict hunting scenes, ritual dances and astronomical observations.",
-        history_era2_full:
-            "Mangystau occupied a strategic position on the Great Silk Road, connecting East and West. Caravans with silk, spices, precious stones and other goods passed through the region. Caravanserais arose along trade routes where travelers could rest and replenish supplies. This period facilitated cultural exchange between different civilizations, the spread of new technologies, religious ideas and scientific knowledge.",
-        history_era3_full:
-            "The construction of underground mosques became a unique phenomenon in Islamic architecture. The mosques of Beket-Ata, Shopan-Ata and Shakpak-Ata were carved into rocks and served not only as places of worship, but also as shelters for Sufi teachers and their followers. These holy places attracted pilgrims from all over Central Asia. Underground premises created special acoustics and microclimate conducive to meditation and spiritual practices.",
-        history_era4_full:
-            "During this period, Mangystau became an important political and cultural center of the Kazakh people. Tribal traditions were formed here, oral folk art developed, and epic poems were created. The region was the arena of important historical events, including the Kazakh-Dzungar wars and the process of joining the Russian Empire. Necropolises of this period demonstrate high mastery of stone carving and unique architectural forms.",
-        history_era5_full:
-            "The 20th century brought radical changes to the life of the region. The discovery of oil and gas fields in the 1960s led to the industrialization of Mangystau. The city of Aktau (originally Shevchenko) was built - the first city in the USSR completely supplied with desalinated seawater. The development of nuclear energy and the creation of the Mangyshlak Atomic Energy Complex became an important milestone. Today Mangystau is a dynamically developing region of Kazakhstan with a rich history and a promising future.",
+        // Articles page translations
+        articles: "Articles",
+        articlesHeroTitle: "Discover the Mangystau Region",
+        articlesHeroDescription:
+            "Read fresh stories about the culture, nature and people of Mangystau",
+        articlesDescription:
+            "Discover interesting stories, tips and guides about Mangystau",
+        allCategories: "All Categories",
+        noArticles: "No articles found",
+        articleNotFound: "Article not found",
+        backToArticles: "Back to Articles",
+        minRead: "min read",
+        views: "views",
+        gallery: "Gallery",
+        similarArticles: "Similar Articles",
+        min: "min",
+        readMore: "Read More",
+        exploreArticles: "Explore Articles",
+        articlesCallToAction: "Learn more about Mangystau from our articles",
+        exploreMusic: "Explore Music",
+        musicHeroTitle: "Mangystau Music",
+        musicHeroDescription:
+            "Listen to traditional kuy and melodies of the region",
+        music: "Music",
+        composer: "Composer",
+        duration: "Duration",
+        listenNow: "Listen",
+        noMusic: "No music found",
+        showDescription: "Show description",
+        hideDescription: "Hide description",
+        download: "Download",
+        playbackSpeed: "Playback Speed",
     },
     kz: {
         home: "Басты бет",
@@ -621,61 +574,38 @@ const translations = {
         pleaseLoginOrSignup: "Пікір қалдыру үшін кіріңіз немесе тіркеліңіз.",
         loginLink: "Кіріңіз",
         signupLink: "Тіркеліңіз",
-        // History page translations
-        historyOfMangystau: "Маңғыстау тарихы",
-        historyCallToAction:
-            "Ежелгі заманнан бүгінге дейінгі Маңғыстаудың бай тарихы мен мәдени мұрасымен танысыңыз",
-        exploreHistory: "Тарихпен танысу",
-        historicalTimeline: "Тарихи хронология",
-        interestingFacts: "Қызықты фактілер",
-        historicalPlaces: "Тарихи орындар",
-        historyIntro:
-            "Маңғыстау — ежелгі өркениеттердің, Ұлы Жібек жолының және қазақ халқының бірегей мәдениетінің іздерін сақтайтын бай тарихы бар өңір",
-        // Timeline
-        history_era1_year: "б.з.д. V-III ғғ.",
-        history_era1_title: "Ежелгі тайпалар",
-        history_era1_desc:
-            "Маңғыстау аумағында сақ және массагет тайпалары тұрған, олар ежелгі некрополдер мен петроглифтерді қалдырды",
-        history_era2_year: "VIII-XII ғғ.",
-        history_era2_title: "Ұлы Жібек жолы",
-        history_era2_desc:
-            "Маңғыстау Ұлы Жібек жолының маңызды транзиттік нүктесіне айналады, ол арқылы Шығыс пен Батыс арасында керуендер өтті",
-        history_era3_year: "X-XIII ғғ.",
-        history_era3_title: "Жерасты мешіттері",
-        history_era3_desc:
-            "Өңірдегі сопылық орталықтарына айналған Бекет-Ата, Шопан-Ата және Шақпақ-Ата бірегей жерасты мешіттерінің салынуы",
-        history_era4_year: "XVIII-XIX ғғ.",
-        history_era4_title: "Қазақ жүздері",
-        history_era4_desc:
-            "Маңғыстау Кіші жүздің маңызды орталығына айналады, мұнда қазақ тарихының маңызды оқиғалары болады және бірегей мәдениет қалыптасады",
-        history_era5_year: "XX ғ. - қазіргі күн",
-        history_era5_title: "Қазіргі даму",
-        history_era5_desc:
-            "Мұнай-газ өнеркәсібінің дамуы, Ақтаудың салынуы және өңірдің Қазақстанның маңызды экономикалық орталығына айналуы",
-        // Interesting facts
-        history_fact1:
-            "Маңғыстау — жартастарға қашалған көптеген жерасты мешіттері бар әлемдегі жалғыз өңір",
-        history_fact2:
-            "Қарақия ойпаты — ТМД аумағындағы ең төмен нүкте, теңіз деңгейінен 132 метр төмен орналасқан",
-        history_fact3:
-            "'Маңғыстау' атауы түркі тілінен 'Мың қыстау' дегенді білдіреді - бұл аталардың көшпелі өмір салтын көрсетеді",
-        history_fact4:
-            "Бозжыра шатқалы — ежелгі мұхит түбі, мұнда акулалардың тістері мен ұлу қабықтары табылған",
-        history_fact5:
-            "Маңғыстау көптеген сопы шейхтері мен әулиелердің отаны болды, олардың мавзолейлері әлі күнге дейін қажылық орындары болып табылады",
-        history_fact6:
-            "Бұдан миллиондаған жыл бұрын Маңғыстау аумағы Тетис мұхитының түбі болған, кейін мұхит тартылып, оның орнында құрғақ дала мен әсем шатқалдар қалыптасты",
-        // Модальды терезе үшін кеңейтілген дәуір сипаттамалары
-        history_era1_full:
-            "Бұл кезеңде қазіргі Маңғыстау аумағында ат мінгіш өнері мен алтын зергерлік бұйымдарын жасаумен танымал жауынгер сақ тайпалары тұрды. Массагеттер, ежелгі деректерге сәйкес, парсы патшасы Кир II әскерін жеңді. Археологиялық қазба жұмыстары қару-жарақ, зергерлік бұйымдар мен тұрмыстық заттары бар бай қоршаулармен көптеген обалар тапты. Сол кезеңнің петроглифтерінде аңшылық көріністері, рәсімдік билер және астрономиялық бақылаулар бейнеленген.",
-        history_era2_full:
-            "Маңғыстау Ұлы Жібек жолында стратегиялық орынды иеленіп, Шығыс пен Батысты байланыстырды. Өңір арқылы жібек, дәмдеуіштер, асыл тастар және басқа тауарлармен керуендер өтті. Сауда жолдары бойында саудагерлер демалып, қорларын толықтыра алатын керуен-сарайлар пайда болды. Бұл кезең әртүрлі өркениеттер арасындағы мәдени алмасуға, жаңа технологиялардың, діни идеялар мен ғылыми білімдердің таралуына ықпал етті.",
-        history_era3_full:
-            "Жерасты мешіттерін салу ислам сәулетіндегі бірегей құбылысқа айналды. Бекет-Ата, Шопан-Ата және Шақпақ-Ата мешіттері жартастарға қашалған және тек құлшылық орындары ғана емес, сонымен қатар сопылық ұстаздар мен олардың ізбасарларына пана болды. Бұл қасиетті орындар бүкіл Орталық Азиядан қажылар тартты. Жерасты үй-жайлары медитация мен рухани тәжірибелерге ықпал ететін арнайы акустика мен микроклимат жасады.",
-        history_era4_full:
-            "Бұл кезеңде Маңғыстау қазақ халқының маңызды саяси және мәдени орталығына айналды. Мұнда рулық дәстүрлер қалыптасты, ауызша халық шығармашылығы дамып, эпостық поэмалар жасалды. Өңір қазақ-жоңғар соғыстары мен Ресей империясына қосылу процесін қоса алғанда, маңызды тарихи оқиғалардың ұйымы болды. Осы кезеңнің некрополдері тас ою өнерінің жоғары шеберлігі мен бірегей сәулеттік формаларды көрсетеді.",
-        history_era5_full:
-            "XX ғасыр өңір өміріне түбегейлі өзгерістер әкелді. 1960 жылдардағы мұнай мен газ кен орындарының ашылуы Маңғыстаудың индустрияландырылуына әкелді. Ақтау қаласы (бастапқыда Шевченко) салынды - КСРО-дағы тұзсыздандырылған теңіз суымен толық қамтамасыз етілген алғашқы қала. Атом энергетикасының дамуы, Маңғышлақ атом энергетикасы комбинатының құрылуы маңызды кезең болды. Бүгінгі күні Маңғыстау - бай тарихы мен перспективалы болашағы бар Қазақстанның қарқынды дамып келе жатқан өңірі.",
+        // Articles page translations
+        articles: "Мақалалар",
+        articlesHeroTitle: "Маңғыстау өңірін ашыңыз",
+        articlesHeroDescription:
+            "Маңғыстаудың мәдениеті, табиғаты және адамдары туралы жаңа материалдарды оқыңыз",
+        articlesDescription:
+            "Маңғыстау туралы қызықты әңгімелер, кеңестер және гидтерді табыңыз",
+        allCategories: "Барлық санаттар",
+        noArticles: "Мақалалар табылмады",
+        articleNotFound: "Мақала табылмады",
+        backToArticles: "Мақалаларға оралу",
+        minRead: "мин оқу",
+        views: "көрулер",
+        gallery: "Галерея",
+        similarArticles: "Ұқсас мақалалар",
+        min: "мин",
+        readMore: "Толығырақ",
+        exploreArticles: "Мақалаларға өту",
+        articlesCallToAction:
+            "Біздің мақалалардан Маңғыстау туралы көбірек біліңіз",
+        exploreMusic: "Музыканы тыңдау",
+        musicHeroTitle: "Маңғыстау музыкасы",
+        musicHeroDescription: "Өңірдің дәстүрлі күйлері мен әуендерін тыңдаңыз",
+        music: "Музыка",
+        composer: "Композитор",
+        duration: "Ұзақтығы",
+        listenNow: "Тыңдау",
+        noMusic: "Музыка табылмады",
+        showDescription: "Сипаттаманы көрсету",
+        hideDescription: "Сипаттаманы жасыру",
+        download: "Жүктеп алу",
+        playbackSpeed: "Ойнату жылдамдығы",
     },
 };
 

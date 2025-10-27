@@ -21,8 +21,11 @@ import TourListPage from "./pages/TourListPage.jsx";
 import TourDetailPage from "./pages/TourDetailPage.jsx";
 // About page
 import AboutPage from "./pages/AboutPage.jsx";
-// History page
-import HistoryPage from "./pages/HistoryPage.jsx";
+// Articles pages
+import ArticlesPage from "./pages/ArticlesPage.jsx";
+import ArticleDetailPage from "./pages/ArticleDetailPage.jsx";
+// Music page
+import MusicPage from "./pages/MusicPage.jsx";
 // Company page
 import CompanyDetailPage from "./pages/CompanyDetailPage.jsx";
 import { pageVariants } from "./utils/animations.js";
@@ -207,12 +210,29 @@ export default function App() {
                                 </AnimatedPage>
                             }
                         />
-                        {/* History page */}
+                        {/* Articles pages */}
                         <Route
-                            path="/history"
+                            path="/articles"
                             element={
                                 <AnimatedPage>
-                                    <HistoryPage />
+                                    <ArticlesPage />
+                                </AnimatedPage>
+                            }
+                        />
+                        <Route
+                            path="/article/:slug"
+                            element={
+                                <AnimatedPage>
+                                    <ArticleDetailPage />
+                                </AnimatedPage>
+                            }
+                        />
+                        {/* Music page */}
+                        <Route
+                            path="/music"
+                            element={
+                                <AnimatedPage>
+                                    <MusicPage />
                                 </AnimatedPage>
                             }
                         />
