@@ -172,7 +172,7 @@ const translations = {
         noReviewsYet: "Пока нет отзывов. Будьте первым!",
         anonymousUser: "Анонимный пользователь",
         pleaseLoginOrSignup:
-            "Пожалуйста, войдите или зарегистрируйтесь, чтобы оставить отзыв.",
+            "Пожалуйста, войдите или зарегистрируйтесь, чтобы пользоваться чат-ботом.",
         loginLink: "Войдите",
         signupLink: "Зарегистрируйтесь",
         // Articles page translations
@@ -371,7 +371,7 @@ const translations = {
         errorLoadingReviews: "Error Loading Reviews:",
         noReviewsYet: "No Reviews Yet. Be the First!",
         anonymousUser: "Anonymous User",
-        pleaseLoginOrSignup: "Please Log in or Sign up to Leave a Review.",
+        pleaseLoginOrSignup: "Please Log in or Sign up to use the chatbot.",
         loginLink: "Log In",
         signupLink: "Sign Up",
         // Articles page translations
@@ -571,7 +571,7 @@ const translations = {
         errorLoadingReviews: "Пікірлерді жүктеу қатесі:",
         noReviewsYet: "Әлі пікірлер жоқ. Бірінші болыңыз!",
         anonymousUser: "Анонимді пайдаланушы",
-        pleaseLoginOrSignup: "Пікір қалдыру үшін кіріңіз немесе тіркеліңіз.",
+        pleaseLoginOrSignup: "Чат-ботты пайдалану үшін кіріңіз немесе тіркеліңіз.",
         loginLink: "Кіріңіз",
         signupLink: "Тіркеліңіз",
         // Articles page translations

@@ -51,6 +51,7 @@ const ChatBot = ({ showHeader = true, onClose }) => {
 
     // Initialize chat service when component mounts
     useEffect(() => {
+        if (!user?.id) return;
         const initChat = async () => {
             try {
                 const sessionId = await initializeChatService(user?.id);
@@ -129,7 +130,7 @@ const ChatBot = ({ showHeader = true, onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!inputValue.trim() || isLoading || !isOnline) return;
+        if (!inputValue.trim() || isLoading || !isOnline || !user) return;
 
         try {
             // Add user message to conversation history
@@ -301,25 +302,31 @@ const ChatBot = ({ showHeader = true, onClose }) => {
                             )}
                         </div>
                         <div className="chat-header-actions">
-                            {queueLength > 0 && (
+                            {user && queueLength > 0 && (
                                 <div className="queue-indicator">
                                     {t("queuePending")} {queueLength}
                                 </div>
                             )}
-                            <button
-                                onClick={() => setShowSessions(!showSessions)}
-                                className="sessions-button"
-                                title={t("chatSessions")}
-                            >
-                                <ChatBubbleLeftRightIcon className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={createNewSession}
-                                className="new-session-button"
-                                title={t("newChat")}
-                            >
-                                <PlusIcon className="w-5 h-5" />
-                            </button>
+                            {user && (
+                                <>
+                                    <button
+                                        onClick={() =>
+                                            setShowSessions(!showSessions)
+                                        }
+                                        className="sessions-button"
+                                        title={t("chatSessions")}
+                                    >
+                                        <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                                    </button>
+                                    <button
+                                        onClick={createNewSession}
+                                        className="new-session-button"
+                                        title={t("newChat")}
+                                    >
+                                        <PlusIcon className="w-5 h-5" />
+                                    </button>
+                                </>
+                            )}
                             {onClose && (
                                 <button
                                     onClick={onClose}
@@ -335,7 +342,7 @@ const ChatBot = ({ showHeader = true, onClose }) => {
             )}
 
             {/* Sessions sidebar */}
-            {showSessions && (
+            {user && showSessions && (
                 <div
                     className={`sessions-sidebar ${showSessions ? "open" : ""}`}
                 >
@@ -368,174 +375,209 @@ const ChatBot = ({ showHeader = true, onClose }) => {
 
             {/* Messages container */}
             <div className="chat-messages">
-                {/* Welcome message when chat is empty */}
-                {conversationHistory.length === 0 && !isLoading && (
+                {!user ? (
                     <div className="welcome-message">
-                        <p>{t("chatWelcomeMessage")}</p>
-                        <div className="welcome-suggestions">
-                            <button
-                                className="suggestion-button"
-                                onClick={() =>
-                                    setInputValue(t("suggestQuestion1"))
-                                }
-                            >
-                                {t("suggestQuestion1")}
-                            </button>
-                            <button
-                                className="suggestion-button"
-                                onClick={() =>
-                                    setInputValue(t("suggestQuestion2"))
-                                }
-                            >
-                                {t("suggestQuestion2")}
-                            </button>
-                            <button
-                                className="suggestion-button"
-                                onClick={() =>
-                                    setInputValue(t("suggestQuestion3"))
-                                }
-                            >
-                                {t("suggestQuestion3")}
-                            </button>
-                        </div>
+                        <p>
+                            {t("pleaseLoginOrSignup")}{" "}
+                            <a href="/login">{t("login")}</a>{" "}
+                            <a href="/signup">{t("signup")}</a>.
+                        </p>
                     </div>
-                )}
-
-                {conversationHistory.map((message) => (
-                    <div
-                        key={message.id}
-                        className={`message-container ${message.sender}`}
-                    >
-                        <div className={`message ${message.sender}`}>
-                            <div
-                                className={`message-bubble ${message.sender} ${message.isError ? "error" : ""}`}
-                            >
-                                {message.sender === "bot" &&
-                                !message.isError ? (
-                                    <MarkdownMessage content={message.text} />
-                                ) : (
-                                    message.text
-                                )}
-                                <div className="message-timestamp">
-                                    {new Date(
-                                        message.timestamp
-                                    ).toLocaleTimeString()}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Message actions - под сообщением */}
-                        {message.sender === "bot" && !message.isError && (
-                            <div className="message-actions">
-                                <button
-                                    onClick={() =>
-                                        copyToClipboard(message.text)
-                                    }
-                                    className="action-button copy-button"
-                                    title={t("copyMessage")}
-                                >
-                                    <ClipboardDocumentIcon className="w-4 h-4" />
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        regenerateMessage(message.id)
-                                    }
-                                    className="action-button regenerate-button"
-                                    title={t("regenerateMessage")}
-                                >
-                                    <ArrowPathIcon className="w-4 h-4" />
-                                </button>
-                                <div className="rating-buttons">
-                                    {[1, 2, 3, 4, 5].map((rating) => {
-                                        // Определяем, должна ли звезда быть заполненной
-                                        const isHovered =
-                                            hoveredRating &&
-                                            hoveredRating.messageId ===
-                                                message.id &&
-                                            rating <= hoveredRating.rating;
-                                        const isRated =
-                                            messageActions[message.id] ===
-                                            "rated";
-
-                                        return (
-                                            <button
-                                                key={rating}
-                                                onClick={() =>
-                                                    rateMessage(
-                                                        message.id,
-                                                        rating
-                                                    )
-                                                }
-                                                onMouseEnter={() =>
-                                                    setHoveredRating({
-                                                        messageId: message.id,
-                                                        rating,
-                                                    })
-                                                }
-                                                onMouseLeave={() =>
-                                                    setHoveredRating(null)
-                                                }
-                                                className={`rating-button ${isRated ? "rated" : ""} ${isHovered ? "hovered" : ""}`}
-                                                title={`${t("rateMessage")} ${rating}`}
-                                            >
-                                                {isHovered || isRated ? (
-                                                    <StarSolid className="w-3.5 h-3.5" />
-                                                ) : (
-                                                    <StarOutline className="w-3.5 h-3.5" />
-                                                )}
-                                            </button>
-                                        );
-                                    })}
+                ) : (
+                    <>
+                        {/* Welcome message when chat is empty */}
+                        {conversationHistory.length === 0 && !isLoading && (
+                            <div className="welcome-message">
+                                <p>{t("chatWelcomeMessage")}</p>
+                                <div className="welcome-suggestions">
+                                    <button
+                                        className="suggestion-button"
+                                        onClick={() =>
+                                            setInputValue(t("suggestQuestion1"))
+                                        }
+                                    >
+                                        {t("suggestQuestion1")}
+                                    </button>
+                                    <button
+                                        className="suggestion-button"
+                                        onClick={() =>
+                                            setInputValue(t("suggestQuestion2"))
+                                        }
+                                    >
+                                        {t("suggestQuestion2")}
+                                    </button>
+                                    <button
+                                        className="suggestion-button"
+                                        onClick={() =>
+                                            setInputValue(t("suggestQuestion3"))
+                                        }
+                                    >
+                                        {t("suggestQuestion3")}
+                                    </button>
                                 </div>
                             </div>
                         )}
-                    </div>
-                ))}
 
-                {isLoading && (
-                    <div className="message bot">
-                        <div className="message-bubble bot typing-indicator">
-                            <div className="typing-dots">
-                                <div className="typing-dot"></div>
-                                <div className="typing-dot"></div>
-                                <div className="typing-dot"></div>
+                        {conversationHistory.map((message) => (
+                            <div
+                                key={message.id}
+                                className={`message-container ${message.sender}`}
+                            >
+                                <div className={`message ${message.sender}`}>
+                                    <div
+                                        className={`message-bubble ${message.sender} ${message.isError ? "error" : ""}`}
+                                    >
+                                        {message.sender === "bot" &&
+                                        !message.isError ? (
+                                            <MarkdownMessage
+                                                content={message.text}
+                                            />
+                                        ) : (
+                                            message.text
+                                        )}
+                                        <div className="message-timestamp">
+                                            {new Date(
+                                                message.timestamp
+                                            ).toLocaleTimeString()}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Message actions - под сообщением */}
+                                {message.sender === "bot" &&
+                                    !message.isError && (
+                                        <div className="message-actions">
+                                            <button
+                                                onClick={() =>
+                                                    copyToClipboard(
+                                                        message.text
+                                                    )
+                                                }
+                                                className="action-button copy-button"
+                                                title={t("copyMessage")}
+                                            >
+                                                <ClipboardDocumentIcon className="w-4 h-4" />
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    regenerateMessage(
+                                                        message.id
+                                                    )
+                                                }
+                                                className="action-button regenerate-button"
+                                                title={t("regenerateMessage")}
+                                            >
+                                                <ArrowPathIcon className="w-4 h-4" />
+                                            </button>
+                                            <div className="rating-buttons">
+                                                {[1, 2, 3, 4, 5].map(
+                                                    (rating) => {
+                                                        // Определяем, должна ли звезда быть заполненной
+                                                        const isHovered =
+                                                            hoveredRating &&
+                                                            hoveredRating.messageId ===
+                                                                message.id &&
+                                                            rating <=
+                                                                hoveredRating.rating;
+                                                        const isRated =
+                                                            messageActions[
+                                                                message.id
+                                                            ] === "rated";
+
+                                                        return (
+                                                            <button
+                                                                key={rating}
+                                                                onClick={() =>
+                                                                    rateMessage(
+                                                                        message.id,
+                                                                        rating
+                                                                    )
+                                                                }
+                                                                onMouseEnter={() =>
+                                                                    setHoveredRating(
+                                                                        {
+                                                                            messageId:
+                                                                                message.id,
+                                                                            rating,
+                                                                        }
+                                                                    )
+                                                                }
+                                                                onMouseLeave={() =>
+                                                                    setHoveredRating(
+                                                                        null
+                                                                    )
+                                                                }
+                                                                className={`rating-button ${isRated ? "rated" : ""} ${isHovered ? "hovered" : ""}`}
+                                                                title={`${t("rateMessage")} ${rating}`}
+                                                            >
+                                                                {isHovered ||
+                                                                isRated ? (
+                                                                    <StarSolid className="w-3.5 h-3.5" />
+                                                                ) : (
+                                                                    <StarOutline className="w-3.5 h-3.5" />
+                                                                )}
+                                                            </button>
+                                                        );
+                                                    }
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
                             </div>
-                        </div>
-                    </div>
+                        ))}
+
+                        {isLoading && (
+                            <div className="message bot">
+                                <div className="message-bubble bot typing-indicator">
+                                    <div className="typing-dots">
+                                        <div className="typing-dot"></div>
+                                        <div className="typing-dot"></div>
+                                        <div className="typing-dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {error && <div className="error-message">{error}</div>}
+
+                        <div ref={messagesEndRef} />
+                    </>
                 )}
-
-                {error && <div className="error-message">{error}</div>}
-
-                <div ref={messagesEndRef} />
             </div>
 
             {/* Input area */}
-            <form onSubmit={handleSubmit} className="chat-input-form">
-                <div className="input-group">
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        disabled={isLoading || !isOnline}
-                        placeholder={
-                            isOnline ? t("typeMessage") : t("offlineMessage")
-                        }
-                        className="chat-input"
-                        aria-label={t("typeMessage")}
-                    />
-                    <button
-                        type="submit"
-                        disabled={!inputValue.trim() || isLoading || !isOnline}
-                        className="btn chat-send-button"
-                        aria-label={t("sendMessage")}
-                    >
-                        {t("send")}
-                    </button>
-                </div>
-                <div className="input-hint">{t("chatHint")}</div>
-            </form>
+            {user && (
+                <form onSubmit={handleSubmit} className="chat-input-form">
+                    <div className="input-group">
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            disabled={isLoading || !isOnline}
+                            placeholder={
+                                isOnline
+                                    ? t("typeMessage")
+                                    : t("offlineMessage")
+                            }
+                            className="chat-input"
+                            aria-label={t("typeMessage")}
+                        />
+                        <button
+                            type="submit"
+                            disabled={
+                                !inputValue.trim() || isLoading || !isOnline
+                            }
+                            className="btn chat-send-button"
+                            aria-label={t("sendMessage")}
+                        >
+                            {t("send")}
+                        </button>
+                    </div>
+                    <div className="input-hint">{t("chatHint")}</div>
+                </form>
+            )}
         </div>
     );
 };
